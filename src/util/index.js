@@ -10,11 +10,33 @@ function nowtimeformat(last=0, current=(new Date())) {
         let mins = parseInt((diff / 60) % 60);
         timestr = `${hr} hr ${mins} min ago`;
     }else if (diff >= 60*60*24){
-        timestr = current.toUTCString();
+        timestr = current.toLocaleString('en-US', {
+            weekday: 'short',
+            month:'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+          });
     }
     return timestr;
 }
 
+
+function timeformat(current=(new Date())) {
+    return current.toLocaleString('en-US', {
+        weekday: 'short',
+        month:'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      });;
+}
+
 export {
-    nowtimeformat
+    nowtimeformat,
+    timeformat
 }

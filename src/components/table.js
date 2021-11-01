@@ -11,8 +11,10 @@ function mergeTableData(columns = [], data = []) {
                     const itemValue = item[itemKey] || '';
                     const itemComponentFn = item2.component;
                     const itemRenderFn = item2.render;
+                    const tdstyle = item2.tdStyle;
+                    const tdcss = item2.tdClassName;
                     return (
-                        <td key={itemKey}>
+                        <td key={itemKey} style={tdstyle} className={tdcss}>
                             {itemRenderFn ? itemRenderFn(item) : false ||
                                 itemComponentFn ? itemComponentFn(item) : false ||
                             itemValue}
@@ -25,7 +27,7 @@ function mergeTableData(columns = [], data = []) {
 }
 
 export default function Table(props) {
-    let { columns, data, pagination, loading, rowClassName, emptyRender } = props;
+    let { columns, data, loading, emptyRender } = props;
     columns = columns || [];
     data = data || [];
     console.log('table-c', columns);
@@ -62,11 +64,15 @@ export default function Table(props) {
                 <thead>
                     <tr>
                         {columns.map((item) => {
-                            let { field, name } = item;
+                            let { field, name,thClassName, thStyle } = item;
                             field = field || '';
                             name = name || '';
                             return (
-                                <th key={field}>{name}</th>
+                                <th className={thClassName}
+                                    style={thStyle}
+                                    key={field}>
+                                    {name}
+                                </th>
                             );
                         })}
                     </tr>

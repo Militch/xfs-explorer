@@ -1,11 +1,12 @@
 import logo from './logo.svg';
+import iconJustify from './icons/justify.svg';
 
 import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useLocation
+  useLocation,
 } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -13,18 +14,26 @@ import './App.css';
 import Home from './Home';
 
 import Blocks from './Blocks';
-import Txs from './Txs';
+import Transactions from './Transactions';
+import BlockDetial from './BlockDetail';
+import TxDetail from './TxDetail';
+import AddressDetail from './AddressDetail';
 import classNames from 'classnames';
+import ErrorPage from './404';
 
 
 function NavLink(props) {
   let location = useLocation();
-  const {href} = props;
-  const {pathname} = location;
+  let {href} = props;
+  let {pathname} = location;
+  let hrefmatch = ()=>{
+    return (href && href !=='/' &&pathname.startsWith(href)) 
+    || (href === '/' && pathname === href);
+  }
   let classnames = classNames(
     {
-      [`text-white`]: pathname === href,
-      [`text-white-50`]: pathname !== href,
+      [`text-white`]: hrefmatch(),
+      [`text-white-50`]: !hrefmatch(),
     }, 'nav-link', 'px-2'
   )
   return (
@@ -39,22 +48,41 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pathname: '/'
+      pathname: '/',
+      showMNav: false,
     };
   }
   componentDidMount() {
     console.log(this.props);
   }
   render() {
+    const appBarClassNames = classNames({
+      [``]:true
+    }, 'app-bar', 'mb-2 mb-lg-0');
+    const btnClassNames = classNames({
+      [``]:true
+    },'btn btn-link app-menu-btn app-bar-btn-none');
+    const navClassNames = classNames({
+      [`nav-m-show`]:this.state.showMNav
+    },'nav col-12 col-lg-auto me-lg-auto mb-2 mb-lg-0', 'nav-lg', 'nav-m');
+    const searchBarClassNames = classNames({
+      [`search-m-show`]:this.state.showMNav
+    },'col-12 col-lg-auto mb-2 mb-lg-0 search-m');
     return (
       <Router>
-        <header className="p-3 bg-dark text-white mb-4">
+        <header className="py-3 bg-dark text-white mb-4">
           <div className="container">
-            <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-              <a href="/" className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <img src={logo} className='app-logo' alt='app-logo' />
+            {/* d-flex flex-wrap align-items-center */}
+            <div className={appBarClassNames}>
+              <a href="/" className="d-flex align-items-center text-white text-decoration-none">
+                <img src={logo} className='app-logo app-logo-lg' alt='app-logo' />
               </a>
-              <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 mx-5">
+              <button className={btnClassNames} onClick={()=>{
+                this.setState({showMNav: !this.state.showMNav});
+              }}>
+                <img src={iconJustify} className='menu-icon' alt='app-menu' />
+              </button>
+              <ul className={navClassNames}>
                 <li>
                   <NavLink href="/">
                     Home
@@ -71,7 +99,7 @@ class App extends React.Component {
                 </NavLink>
                 </li>
               </ul>
-              <form className="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+              <form className={searchBarClassNames}>
                 <input type="search" className="form-control form-control-dark" placeholder="Search..."/>
               </form>
             </div>
@@ -81,9 +109,17 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home}>
             </Route>
-            <Route path="/blocks" component={Blocks}>
+            <Route exact path="/blocks" component={Blocks}>
             </Route>
-            <Route path="/txs" component={Txs}>
+            <Route path="/blocks/:hash" component={BlockDetial}>
+            </Route>
+            <Route exact path="/txs" component={Transactions}>
+            </Route>
+            <Route path="/txs/:hash" component={TxDetail}>
+            </Route>
+            <Route path="/address/:addr" component={AddressDetail}>
+            </Route>
+            <Route path="/404" component={ErrorPage}>
             </Route>
           </Switch>
         </main>

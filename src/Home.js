@@ -30,7 +30,27 @@ class Home extends React.Component {
                     miner: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
                     txcount: 120
                 }
-            ]
+            ],
+            latestTxs: [
+                {
+                    hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
+                    time: 1633689872,
+                    value: 100,
+                    fee: 300
+                },
+                {
+                    hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
+                    time: 1633689872,
+                    value: 100,
+                    fee: 300
+                },
+                {
+                    hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
+                    time: 1633689872,
+                    value: 100,
+                    fee: 300
+                },
+            ],
         }
     }
     render() {
@@ -88,7 +108,9 @@ class Home extends React.Component {
                             <div className="table-responsive p-2">
                                 <Table columns={[
                                     {
-                                        field: 'height', name: 'Height', render: (item) => {
+                                        field: 'height', name: 'Height',
+                                        tdStyle: { width: '6%' },
+                                        render: (item) => {
                                             return (
                                                 <a href={`/blocks/${item.hash}`}>
                                                     {item.height}
@@ -97,25 +119,31 @@ class Home extends React.Component {
                                         }
                                     },
                                     {
-                                        field: 'time', name: 'Time', render: (item) => {
+                                        field: 'time', name: 'Time',
+                                        tdStyle: { width: '250px' },
+                                         render: (item) => {
                                             const timestr = nowtimeformat(item.time, new Date());
                                             return (
-                                                <span class="fs-6">
+                                                <span className="fs-6">
                                                     {timestr}
                                                 </span>
                                             );
                                         }
                                     },
                                     {
-                                        field: 'miner', name: 'Miner', render: (item) => {
+                                        field: 'miner', name: 'Miner', 
+                                        tdStyle: { maxWidth: '120px' },
+                                        render: (item) => {
                                             return (
-                                                <a href={`/addr/${item.miner}`}>
-                                                    {item.miner}
-                                                </a>
+                                                <div className="text-truncate">
+                                                    <a href={`/address/${item.miner}`}>
+                                                        {item.miner}
+                                                    </a>
+                                                </div>
                                             );
                                         }
                                     },
-                                    { field: 'txs', name: 'Txs' },
+                                    { field: 'txcount', name: 'Txs' },
                                 ]} data={this.state.latestBlocks} click={() => { }} >
                                 </Table>
                             </div>
@@ -134,26 +162,34 @@ class Home extends React.Component {
                             <div className="table-responsive p-2">
                                 <Table columns={[
                                     {
-                                        field: 'hash', name: 'TX HASH', render: (item) => {
+                                        field: 'hash', name: 'TX HASH',
+                                        tdStyle: { maxWidth: '50px' },
+                                        render: (item) => {
                                             return (
-                                                <a href={`/txs/${item.hash}`}>
-                                                    {item.hash}
-                                                </a>
+                                                <div className="text-truncate">
+
+                                                    <a href={`/txs/${item.hash}`}>
+                                                        {item.hash}
+                                                    </a>
+                                                </div>
                                             );
                                         }
                                     },
                                     {
-                                        field: 'time', name: 'Time', render: (item) => {
+                                        field: 'time', name: 'Time',
+                                        tdStyle: { width: '250px' },
+                                        render: (item) => {
                                             const timestr = nowtimeformat(item.time, new Date());
                                             return (
-                                                <span class="fs-6">
+                                                <span className="fs-6">
                                                     {timestr}
                                                 </span>
                                             );
                                         }
                                     },
                                     { field: 'value', name: 'Value', },
-                                ]} data={[]} click={() => { }} >
+                                    { field: 'fee', name: 'Fee', },
+                                ]} data={this.state.latestTxs} click={() => { }} >
                                 </Table>
                             </div>
                         </div>
