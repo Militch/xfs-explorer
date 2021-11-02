@@ -6,56 +6,68 @@ import {
 
 import { Table, Pagination } from './components';
 import { timeformat } from './util';
-
+import services from './services';
+import { atto2base } from './util/xfslibutil';
+const api = services.api;
 class BlockDtail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: {
-                height: 100,
-                version: 0,
-                hashPrevBlock: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                time: 123135,
-                coinbase: '1MAdrZZ8BcPJAM2CYibKmrZoJP7AhpHBoY',
-                stateRoot: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                transactionsRoot: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                receiptsRoot: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                gasLimit: 12313,
-                gasUsed: 12313,
-                bits: 123132,
-                nonce: 1231321,
+                header: {
+                    // bits: 4278190109,
+                    // coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    // gasLimit: "2500",
+                    // gasUsed: "2500",
+                    // hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    // hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
+                    // height: 4,
+                    // id: 5,
+                    // nonce: 12775115,
+                    // receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
+                    // stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
+                    // timestamp: 1635806005,
+                    // transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
+                    // txCount: 1,
+                    // version: 0,
+                },
                 transactions: [
-                    {
-                        hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                        block: 0,
-                        time: 1633689872,
-                        from: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        to: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        value: 100,
-                        fee: 100,
-                    },
-                    {
-                        hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                        time: 1633689872,
-                        from: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        to: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        value: 100,
-                        fee: 100,
-                    },
+                    // {
+                    //     blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    //     blockHeight: 4,
+                    //     data: null,
+                    //     from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    //     gasFee: "250000",
+                    //     gasLimit: "2500",
+                    //     gasPrice: "100",
+                    //     hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                    //     id: 1,
+                    //     nonce: 0,
+                    //     signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                    //     timestamp: 1635805918,
+                    //     to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                    //     value: "10000000000000000000",
+                    //     version: 0,
+                    // },
                 ]
             }
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
         const { history, location, match } = this.props;
         const { params } = match;
-        console.log('match', params);
+        // console.log('match', params);
         if (!params.hash || !/^0x[0-9a-fA-F]{64}$/.test(params.hash)) {
             history.replace('/404');
         }
+        const data = await api.getBlockByHash(params.hash);
+        this.setState({data: data});
+        console.log(data);
+
     }
     render() {
+        let time = parseInt(this.state.data.header.timestamp);
+        const timestr = timeformat(new Date(time * 1000));
         return (
             <div>
                 <h1 className="mb-4">
@@ -69,7 +81,7 @@ class BlockDtail extends React.Component {
                             </div>
                             <div className="col-md-9">
                                 <div className="d-flex">
-                                    {this.state.data.height}
+                                    {this.state.data.header.height}
                                 </div>
                             </div>
                         </div>
@@ -80,7 +92,7 @@ class BlockDtail extends React.Component {
                                 Version:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.version}
+                                {this.state.data.header.version}
                             </div>
                         </div>
                     </li>
@@ -90,7 +102,7 @@ class BlockDtail extends React.Component {
                                 Prev Block Hash:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.hashPrevBlock}
+                                {this.state.data.header.hashPrevBlock}
                             </div>
                         </div>
                     </li>
@@ -100,7 +112,7 @@ class BlockDtail extends React.Component {
                                 Hash:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.hash}
+                                {this.state.data.header.hash}
                             </div>
                         </div>
                     </li>
@@ -110,7 +122,7 @@ class BlockDtail extends React.Component {
                                 Time:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.time}
+                                {timestr}
                             </div>
                         </div>
                     </li>
@@ -120,7 +132,7 @@ class BlockDtail extends React.Component {
                                 Coinbase:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.coinbase}
+                                {this.state.data.header.coinbase}
                             </div>
                         </div>
                     </li>
@@ -130,7 +142,7 @@ class BlockDtail extends React.Component {
                                 State Root Hash:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.stateRoot}
+                                {this.state.data.header.stateRoot}
                             </div>
                         </div>
                     </li>
@@ -140,7 +152,7 @@ class BlockDtail extends React.Component {
                                 Transactions Root Hash:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.transactionsRoot}
+                                {this.state.data.header.transactionsRoot}
                             </div>
                         </div>
                     </li>
@@ -150,7 +162,7 @@ class BlockDtail extends React.Component {
                                 Receipts Root Hash:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.receiptsRoot}
+                                {this.state.data.header.receiptsRoot}
                             </div>
                         </div>
                     </li>
@@ -160,7 +172,7 @@ class BlockDtail extends React.Component {
                                 Gas Limit:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.gasLimit}
+                                {this.state.data.header.gasLimit}
                             </div>
                         </div>
                     </li>
@@ -170,7 +182,7 @@ class BlockDtail extends React.Component {
                                 Gas Used:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.gasUsed}
+                                {this.state.data.header.gasUsed}
                             </div>
                         </div>
                     </li>
@@ -180,7 +192,7 @@ class BlockDtail extends React.Component {
                                 Bits:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.bits}
+                                {this.state.data.header.bits}
                             </div>
                         </div>
                     </li>
@@ -190,7 +202,7 @@ class BlockDtail extends React.Component {
                                 Nonce:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.nonce}
+                                {this.state.data.header.nonce}
                             </div>
                         </div>
                     </li>
@@ -207,7 +219,7 @@ class BlockDtail extends React.Component {
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href="/blocks/1">
+                                            <a href={`/txs/${item.hash}`}>
                                                 {item.hash}
                                             </a>
                                         </div>
@@ -215,10 +227,11 @@ class BlockDtail extends React.Component {
                                 }
                             },
                             {
-                                field: 'time', name: 'Time',
+                                field: 'timestamp', name: 'Time',
                                 tdStyle: { width: '230px' },
                                 render: (item) => {
-                                    const timestr = timeformat(new Date(item.time * 1000));
+                                    let time = parseInt(item.timestamp);
+                                    const timestr = timeformat(new Date(time * 1000));
                                     return (
                                         <span className="fs-6">
                                             {timestr}
@@ -232,8 +245,8 @@ class BlockDtail extends React.Component {
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href={`/blocks/${item.block}`}>
-                                                {item.to}
+                                            <a href={`/address/${item.from}`}>
+                                                {item.from}
                                             </a>
                                         </div>
 
@@ -246,15 +259,23 @@ class BlockDtail extends React.Component {
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href={`/blocks/${item.block}`}>
+                                            <a href={`/address/${item.to}`}>
                                                 {item.to}
                                             </a>
                                         </div>
                                     );
                                 }
                             },
-                            { field: 'value', name: 'Value' },
-                            { field: 'fee', name: 'Fee' },
+                            { field: 'value', name: 'Value',
+                            render: (item)=>{
+                                let val = atto2base(item.value);
+                                return (
+                                    <span>
+                                        {val} FIX
+                                    </span>
+                                );
+                            }  },
+                            { field: 'gasFee', name: 'Fee' },
                         ]} data={this.state.data.transactions} click={() => { }} >
                         </Table>
                     </div>

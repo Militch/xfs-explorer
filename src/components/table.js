@@ -8,7 +8,7 @@ function mergeTableData(columns = [], data = []) {
             <tr key={String(index)}>
                 {columns.map((item2) => {
                     const itemKey = item2.field || '';
-                    const itemValue = item[itemKey] || '';
+                    const itemValue = item[itemKey];
                     const itemComponentFn = item2.component;
                     const itemRenderFn = item2.render;
                     const tdstyle = item2.tdStyle;

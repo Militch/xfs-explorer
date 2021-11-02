@@ -6,7 +6,9 @@ import {
 } from "react-router-dom";
 import { Table, Pagination } from './components';
 import { timeformat } from './util';
-
+import services from './services';
+import { atto2base } from './util/xfslibutil';
+const api = services.api;
 function PaginationWapper(props) {
     let location = useLocation();
     const { total, pageSize } = props;
@@ -22,72 +24,65 @@ function PaginationWapper(props) {
          pageSize={pageSize} total={total} />
     );
 }
-
-function PageHolder(props) {
-    let { pageSize, total } = props;
-    pageSize = parseInt(pageSize);
-    total = parseInt(total);
-    let pn = parseInt(total / pageSize);
-    let mod = total % pageSize;
-    if (mod > 0) {
-        pn += 1;
-    }
-    const location = useLocation();
-    const history = useHistory();
-    const { search } = location;
-    const sq = qs.parse(search.replace(/^\?/, ''));
-    let pageNum = sq['p'];
-    if (!pageNum) {
-        pageNum = 1;
-    }
-    pageNum = parseInt(pageNum);
-    if (pageNum > pn) {
-        history.replace('/404');
-    }
-    return (
-        <div style={{ display: 'none' }}>
-        </div>
-    );
-}
 class Transactions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {
-                data: [
-                    {
-                        hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                        block: 0,
-                        blockHash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                        time: 1633689872,
-                        from: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        to: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        value: 100,
-                        fee: 100,
-                    },
-                    {
-                        hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                        block: 0,
-                        blockHash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                        time: 1633689872,
-                        from: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        to: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                        value: 100,
-                        fee: 100,
-                    },
-                ],
-                page: {
-                    pageSize: 20,
-                    total: 1022
-                }
+            data: [
+                // {
+                //     blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                //     blockHeight: 4,
+                //     data: null,
+                //     from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                //     gasFee: "250000",
+                //     gasLimit: "2500",
+                //     gasPrice: "100",
+                //     hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                //     id: 1,
+                //     nonce: 0,
+                //     signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                //     timestamp: 1635805918,
+                //     to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                //     value: "10000000000000000000",             
+                // },
+            ],
+            page: {
+                pageSize: 20,
+                total: 1022
             }
         }
+    }
+    async componentDidMount(){
+        const { history, location } = this.props;
+        const {search} = location;
+        const sq = qs.parse(search.replace(/^\?/,''));
+        let pageNum = sq['p'];
+        if (!pageNum) {
+            pageNum = 1;
+        }
+        pageNum = parseInt(pageNum);
+        let pagedata = await api.getTransactionsByPage({params: {
+            p: pageNum,
+        }});
+        console.log('pagedata', pagedata);
+        const {total,records} = pagedata;
+        let pageSize = this.state.page.pageSize;
+        let pn = parseInt(total / pageSize);
+        let mod = total % pageSize;
+        if (mod > 0) {
+            pn += 1;
+        }
+        if (pageNum > pn){
+            history.replace('/404');
+            return;
+        }
+        this.setState({page: {total: total, 
+            pageSize: pageSize}, 
+            data: records});
     }
     render() {
         return (
             <div>
-                <PageHolder total={this.state.data.page.total}
-                    pageSize={this.state.data.page.pageSize} />
                 <h1 className="mb-4">
                     Transactions
                 </h1>
@@ -108,21 +103,22 @@ class Transactions extends React.Component {
                                 }
                             },
                             {
-                                field: 'block', name: 'Block',
+                                field: 'blockHeight', name: 'Block',
                                 tdStyle: { width: '6%' },
                                 render: (item) => {
                                     return (
                                         <a href={`/blocks/${item.blockHash}`}>
-                                            {item.block}
+                                            {item.blockHeight}
                                         </a>
                                     );
                                 }
                             },
                             {
-                                field: 'time', name: 'Time',
+                                field: 'timestamp', name: 'Time',
                                 tdStyle: { width: '230px' },
                                 render: (item) => {
-                                    const timestr = timeformat(new Date(item.time * 1000));
+                                    let time = parseInt(item.timestamp);
+                                    const timestr = timeformat(new Date(time * 1000));
                                     return (
                                         <span className="fs-6">
                                             {timestr}
@@ -157,15 +153,31 @@ class Transactions extends React.Component {
                                     );
                                 }
                             },
-                            { field: 'value', name: 'Value' },
-                            { field: 'fee', name: 'Fee' },
-                        ]} data={this.state.data.data} click={() => { }} >
+                            { field: 'value', name: 'Value', 
+                            render: (item)=>{
+                                let val = atto2base(item.value);
+                                return (
+                                    <span>
+                                        {val} FIX
+                                    </span>
+                                );
+                            } },
+                            { field: 'gasFee', name: 'Fee',
+                            render: (item)=>{
+                                // let val = atto2base(item.value);
+                                return (
+                                    <span>
+                                        {item.gasFee}
+                                    </span>
+                                );
+                            } },
+                        ]} data={this.state.data} click={() => { }} >
                         </Table>
                     </div>
                     <div className="card-footer">
                         <PaginationWapper
-                            pageSize={this.state.data.page.pageSize}
-                            total={this.state.data.page.total} />
+                            pageSize={this.state.page.pageSize}
+                            total={this.state.page.total} />
                     </div>
                 </div>
             </div>
