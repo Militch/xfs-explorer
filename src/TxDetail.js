@@ -6,40 +6,57 @@ import {
 
 import { Table, Pagination } from './components';
 import { timeformat } from './util';
-
+import services from './services';
+import { atto2base } from './util/xfslibutil';
+const api = services.api;
 class TXDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             data: {
-                version: 0,
-                hash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                block: 100,
-                blockHash: '0x00001989001b007f2fad2d01721d6f8f03a8dd39507a20a46d0a6baf4ca9e1dd',
-                time: 1633689872,
-                from: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                to: 'SskJje8fVgAdu4Xyuv6Qw7exQPJ4LYWWX',
-                status: 1,
-                value: 100,
-                fee: 100,
-                nonce: 100,
-                gasPrice: 100,
-                gasLimit: 100,
-                gasUsed: 1000,
-                data: 'abc'
+                // blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                // blockHeight: 4,
+                // data: null,
+                // from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                // gasFee: "250000",
+                // gasLimit: "2500",
+                // gasPrice: "100",
+                // gasUsed: "2500",
+                // hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                // id: 1,
+                // nonce: 0,
+                // signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                // status: 1,
+                // timestamp: 1635805918,
+                // to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                // value: "10000000000000000000",
+                // version: 0,
+
             },
             dataFormat: 'HEX'
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
         const { history, location, match } = this.props;
         const { params } = match;
         console.log('match', params);
         if (!params.hash || !/^0x[0-9a-fA-F]{64}$/.test(params.hash)) {
             history.replace('/404');
         }
+        // console.log(`data`, data);
+        try {
+            const data = await api.getTransactionByHash(params.hash);
+            this.setState({data: data});
+        }catch(e){
+            history.replace('/404');
+            return;
+        }
     }
     render() {
+        let time = parseInt(this.state.data.timestamp);
+        const timestr = timeformat(new Date(time * 1000));
+        const valuestr = atto2base(this.state.data.value);
+        let datastr = this.state.data.data || '';
         return (
             <div>
                 <h1 className="mb-4">
@@ -78,7 +95,9 @@ class TXDetail extends React.Component {
                             </div>
                             <div className="col-md-9">
                                 <div className="d-flex">
-                                    {this.state.data.block}
+                                    <a href={`/blocks/${this.state.data.blockHash}`}>
+                                        {this.state.data.blockHeight}
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +118,7 @@ class TXDetail extends React.Component {
                                 Time:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.time}
+                                {timestr}
                             </div>
                         </div>
                     </li>
@@ -129,7 +148,7 @@ class TXDetail extends React.Component {
                                 Value:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.value}
+                                {valuestr} FIX
                             </div>
                         </div>
                     </li>
@@ -139,7 +158,7 @@ class TXDetail extends React.Component {
                                 Gas Price:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.gasPrice}
+                                {this.state.data.gasPrice} AttoFIX
                             </div>
                         </div>
                     </li>
@@ -160,6 +179,16 @@ class TXDetail extends React.Component {
                             </div>
                             <div className="col-md-9">
                                 {this.state.data.gasUsed}
+                            </div>
+                        </div>
+                    </li>
+                    <li className="list-group-item py-3">
+                        <div className="row">
+                            <div className="col-md-3">
+                                Gas Fee:
+                            </div>
+                            <div className="col-md-9">
+                                {this.state.data.gasFee} AttoFIX
                             </div>
                         </div>
                     </li>
@@ -232,7 +261,7 @@ class TXDetail extends React.Component {
                                 className="form-control"
                                 rows="3"
                                 readOnly
-                                value={this.state.data.data}></textarea>
+                                value={datastr}></textarea>
                         </div>
                     </div>
                 </div>

@@ -36,7 +36,7 @@ export default function Table(props) {
             return (
                 <td style={{
                     textAlign: 'center'
-                }} colSpan="5">
+                }} colSpan={columns.length}>
                     <div style={{
                         padding: '4rem 0'
                     }}>

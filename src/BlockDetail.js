@@ -59,11 +59,15 @@ class BlockDtail extends React.Component {
         // console.log('match', params);
         if (!params.hash || !/^0x[0-9a-fA-F]{64}$/.test(params.hash)) {
             history.replace('/404');
+            return;
         }
-        const data = await api.getBlockByHash(params.hash);
-        this.setState({data: data});
-        console.log(data);
-
+        try {
+            const data = await api.getBlockByHash(params.hash);
+            this.setState({data: data});
+        }catch(e){
+            history.replace('/404');
+            return;
+        }
     }
     render() {
         let time = parseInt(this.state.data.header.timestamp);
@@ -102,7 +106,9 @@ class BlockDtail extends React.Component {
                                 Prev Block Hash:
                             </div>
                             <div className="col-md-9">
-                                {this.state.data.header.hashPrevBlock}
+                                <a href={`/blocks/${this.state.data.header.hashPrevBlock}`}>
+                                    {this.state.data.header.hashPrevBlock}
+                                </a>
                             </div>
                         </div>
                     </li>
