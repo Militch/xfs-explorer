@@ -9,7 +9,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import Home from './Home';
 
@@ -96,6 +96,16 @@ class App extends React.Component {
                 <li>
                 <NavLink href="/txs">
                   Transactions
+                </NavLink>
+                </li>
+                <li>
+                <NavLink href="/tokens">
+                  Tokens
+                </NavLink>
+                </li>
+                <li>
+                <NavLink href="/nfts">
+                  NTFs
                 </NavLink>
                 </li>
               </ul>

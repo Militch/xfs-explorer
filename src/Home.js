@@ -3,10 +3,11 @@ import { Table } from './components';
 import services from './services';
 import { nowtimeformat, timeformat } from './util';
 import { atto2base } from './util/xfslibutil';
+import Chart from "react-apexcharts";
 const api = services.api;
 
-function CoinNumberRender(props){
-    const {value} = props;
+function CoinNumberRender(props) {
+    const { value } = props;
     console.log(props);
     let number = atto2base(value);
     return (
@@ -21,9 +22,32 @@ class Home extends React.Component {
         this.state = {
             status: {
                 latestHeight: 1,
-                blockReward: 0,
+                blockReward: 17.00,
                 difficulty: 0
             },
+            options: {
+                chart: {
+                    id: "basic-bar",
+                    animations: {
+                        enabled: false
+                    },
+                    toolbar: {
+                        show: false,
+                    },
+                    zoom: {
+                        enabled: false,
+                    }
+                },
+                xaxis: {
+                    categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999]
+                },
+            },
+            series: [
+                {
+                    name: "series-1",
+                    data: [30, 40, 45, 50, 49, 60, 70, 91]
+                }
+            ],
             latestBlocks: [
                 // {
                 //     bits: 4278190109,
@@ -63,47 +87,129 @@ class Home extends React.Component {
             ],
         }
     }
-    async componentDidMount(){
+    async componentDidMount() {
         let st = await api.getStatus();
         console.log('status', st);
         let latest = await api.getLatest();
-        const {blocks, txs} = latest;
-        this.setState({latestBlocks: blocks, latestTxs: txs})
+        const { blocks, txs } = latest;
+        this.setState({ latestBlocks: blocks, latestTxs: txs });
+        // a := new ApexCharts(document.getElementById('chart-demo-line'));
         // console.log('latest', latest);
     }
     render() {
         return (
             <div>
                 <div className="row mb-4">
-                    <div className="col-md-4 mb-2">
+                    <div className="col-lg-6">
+                        <div className="row">
+                            <div className="col-lg-4 mb-2">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">
+                                            Latest Height
+                                        </h5>
+                                        <p className="card-text" style={{
+                                                fontSize: '26px',
+                                                fontWeight: 400,
+                                        }}>
+                                            {this.state.status.latestHeight}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 mb-2">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Block Reward</h5>
+                                        <p className="card-text"  style={{
+                                                fontSize: '26px',
+                                                fontWeight: 400,
+                                        }}>
+                                            {this.state.status.blockReward} XFSC
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 mb-2">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Difficulty</h5>
+                                        <p className="card-text"  style={{
+                                                fontSize: '26px',
+                                                fontWeight: 400,
+                                        }}>
+                                            {this.state.status.difficulty} H
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 mb-2">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Difficulty</h5>
+                                        <p className="card-text"  style={{
+                                                fontSize: '26px',
+                                                fontWeight: 400,
+                                        }}>
+                                            {this.state.status.difficulty} H
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 mb-2">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Difficulty</h5>
+                                        <p className="card-text"  style={{
+                                                fontSize: '26px',
+                                                fontWeight: 400,
+                                        }}>
+                                            {this.state.status.difficulty} H
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 mb-2">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Difficulty</h5>
+                                        <p className="card-text"  style={{
+                                                fontSize: '26px',
+                                                fontWeight: 400,
+                                        }}>
+                                            {this.state.status.difficulty} H
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-lg-4 mb-2">
+                                <div className="card">
+                                    <div className="card-body">
+                                        <h5 className="card-title">Difficulty</h5>
+                                        <p className="card-text"  style={{
+                                                fontSize: '26px',
+                                                fontWeight: 400,
+                                        }}>
+                                            {this.state.status.difficulty} H
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-6 mb-2">
                         <div className="card">
-                            <div className="card-body">
+                            <div class="card-body">
                                 <h5 className="card-title">
-                                    Latest Height
+                                TRANSACTION HISTORY IN DAY
                                 </h5>
-                                <p className="card-text">
-                                    {this.state.status.latestHeight}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4 mb-2">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">Block Reward</h5>
-                                <p className="card-text">
-                                    {this.state.status.blockReward} XFSC
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-md-4 mb-2">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">Difficulty</h5>
-                                <p className="card-text">
-                                    {this.state.status.difficulty} H
-                                </p>
+                                <Chart
+                                    className={'chart-lg'}
+                                    type="line"
+                                    height="240px"
+                                    options={this.state.options}
+                                    series={this.state.series}
+                                />
                             </div>
                         </div>
                     </div>
@@ -115,15 +221,13 @@ class Home extends React.Component {
                                 <span style={{
                                     verticalAlign: 'middle'
                                 }}>LATEST BLOCKS</span>
-                                <span style={{
-                                    float: 'right',
-                                }}>
+                                <span className="ms-auto">
                                     <a href="/blocks" >
                                         View All
                                     </a>
                                 </span>
                             </div>
-                            <div className="table-responsive p-2">
+                            <div className="table-responsive">
                                 <Table columns={[
                                     {
                                         field: 'height', name: 'Height',
@@ -139,9 +243,9 @@ class Home extends React.Component {
                                     {
                                         field: 'timestamp', name: 'Time',
                                         tdStyle: { width: '250px' },
-                                         render: (item) => {
+                                        render: (item) => {
                                             let t = parseInt(item.timestamp);
-                                            let datetime = new Date(t*1000);
+                                            let datetime = new Date(t * 1000);
                                             const timestr = timeformat(datetime);
                                             return (
                                                 <span className="fs-6">
@@ -151,7 +255,7 @@ class Home extends React.Component {
                                         }
                                     },
                                     {
-                                        field: 'coinbase', name: 'Miner', 
+                                        field: 'coinbase', name: 'Miner',
                                         tdStyle: { maxWidth: '120px' },
                                         render: (item) => {
                                             return (
@@ -173,13 +277,13 @@ class Home extends React.Component {
                         <div className="card">
                             <div className="card-header">
                                 <span style={{ verticalAlign: 'middle' }}>LATEST TRANSACTIONS</span>
-                                <span style={{ float: 'right' }}>
+                                <span className="ms-auto">
                                     <a href="/txs" >
                                         View All
                                     </a>
                                 </span>
                             </div>
-                            <div className="table-responsive p-2">
+                            <div className="table-responsive">
                                 <Table columns={[
                                     {
                                         field: 'hash', name: 'TX HASH',
@@ -200,7 +304,7 @@ class Home extends React.Component {
                                         tdStyle: { width: '250px' },
                                         render: (item) => {
                                             let t = parseInt(item.timestamp);
-                                            let datetime = new Date(t*1000);
+                                            let datetime = new Date(t * 1000);
                                             const timestr = timeformat(datetime);
                                             return (
                                                 <span>
@@ -209,8 +313,11 @@ class Home extends React.Component {
                                             );
                                         }
                                     },
-                                    { field: 'value', name: 'Value', render:  (item)=>{ 
-                                        return CoinNumberRender({value: item.value})}},
+                                    {
+                                        field: 'value', name: 'Value', render: (item) => {
+                                            return CoinNumberRender({ value: item.value })
+                                        }
+                                    },
                                 ]} data={this.state.latestTxs} click={() => { }} >
                                 </Table>
                             </div>

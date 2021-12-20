@@ -15,40 +15,24 @@ class BlockDtail extends React.Component {
         this.state = {
             data: {
                 header: {
-                    // bits: 4278190109,
-                    // coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    // gasLimit: "2500",
-                    // gasUsed: "2500",
-                    // hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    // hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    // height: 4,
-                    // id: 5,
-                    // nonce: 12775115,
-                    // receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    // stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    // timestamp: 1635806005,
-                    // transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    // txCount: 1,
-                    // version: 0,
+                    bits: 4278190109,
+                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    gasLimit: "2500",
+                    gasUsed: "2500",
+                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
+                    height: 4,
+                    id: 5,
+                    nonce: 12775115,
+                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
+                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
+                    timestamp: 1635806005,
+                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
+                    txCount: 1,
+                    version: 0,
                 },
                 transactions: [
-                    // {
-                    //     blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    //     blockHeight: 4,
-                    //     data: null,
-                    //     from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    //     gasFee: "250000",
-                    //     gasLimit: "2500",
-                    //     gasPrice: "100",
-                    //     hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    //     id: 1,
-                    //     nonce: 0,
-                    //     signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    //     timestamp: 1635805918,
-                    //     to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    //     value: "10000000000000000000",
-                    //     version: 0,
-                    // },
+                    
                 ]
             }
         }
@@ -58,14 +42,14 @@ class BlockDtail extends React.Component {
         const { params } = match;
         // console.log('match', params);
         if (!params.hash || !/^0x[0-9a-fA-F]{64}$/.test(params.hash)) {
-            history.replace('/404');
+            // history.replace('/404');
             return;
         }
         try {
             const data = await api.getBlockByHash(params.hash);
             this.setState({data: data});
         }catch(e){
-            history.replace('/404');
+            // history.replace('/404');
             return;
         }
     }

@@ -14,23 +14,23 @@ class TXDetail extends React.Component {
         super(props);
         this.state = {
             data: {
-                // blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                // blockHeight: 4,
-                // data: null,
-                // from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                // gasFee: "250000",
-                // gasLimit: "2500",
-                // gasPrice: "100",
-                // gasUsed: "2500",
-                // hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                // id: 1,
-                // nonce: 0,
-                // signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                // status: 1,
-                // timestamp: 1635805918,
-                // to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                // value: "10000000000000000000",
-                // version: 0,
+                blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                blockHeight: 4,
+                data: null,
+                from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                gasFee: "250000",
+                gasLimit: "2500",
+                gasPrice: "100",
+                gasUsed: "2500",
+                hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                id: 1,
+                nonce: 0,
+                signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                status: 1,
+                timestamp: 1635805918,
+                to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                value: "10000000000000000000",
+                version: 0,
 
             },
             dataFormat: 'HEX'
@@ -41,14 +41,14 @@ class TXDetail extends React.Component {
         const { params } = match;
         console.log('match', params);
         if (!params.hash || !/^0x[0-9a-fA-F]{64}$/.test(params.hash)) {
-            history.replace('/404');
+            // history.replace('/404');
         }
         // console.log(`data`, data);
         try {
             const data = await api.getTransactionByHash(params.hash);
             this.setState({data: data});
         }catch(e){
-            history.replace('/404');
+            // history.replace('/404');
             return;
         }
     }
