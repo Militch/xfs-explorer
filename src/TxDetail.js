@@ -3,7 +3,7 @@ import {
     useLocation,
     useHistory
 } from "react-router-dom";
-
+import intl from 'react-intl-universal';
 import { Table, Pagination } from './components';
 import { timeformat } from './util';
 import services from './services';
@@ -60,7 +60,7 @@ class TXDetail extends React.Component {
         return (
             <div>
                 <h1 className="mb-4">
-                    Transaction Detial
+                    {intl.get('PAGE_TITLE_TX_DETAIL')}
                 </h1>
                 <ul className="list-group list-group-flush mb-4">
                     <li className="list-group-item py-3">

@@ -1,9 +1,10 @@
 import React from 'react';
+
 import {
     useLocation,
     useHistory
 } from "react-router-dom";
-
+import intl from 'react-intl-universal';
 import { Table, Pagination } from './components';
 import { timeformat } from './util';
 
@@ -28,7 +29,7 @@ class AddressDetail extends React.Component {
         return (
             <div>
                 <h1 className="mb-4">
-                    Address Detial
+                    {intl.get('PAGE_TITLE_ACCOUNT_DETAIL')}
                 </h1>
                 <ul className="list-group list-group-flush mb-4">
                     <li className="list-group-item py-3">

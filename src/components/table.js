@@ -1,5 +1,7 @@
 import React from 'react';
 
+// import './table.css';
+
 import empty from './empty.svg';
 
 function mergeTableData(columns = [], data = []) {
@@ -14,10 +16,12 @@ function mergeTableData(columns = [], data = []) {
                     const tdstyle = item2.tdStyle;
                     const tdcss = item2.tdClassName;
                     return (
-                        <td key={itemKey} style={tdstyle} className={tdcss}>
-                            {itemRenderFn ? itemRenderFn(item) : false ||
-                                itemComponentFn ? itemComponentFn(item) : false ||
-                            itemValue}
+                        <td key={itemKey} style={tdstyle} className={tdcss} data-th={itemKey}>
+                            <div className='td-wrap'>
+                                {itemRenderFn ? itemRenderFn(item) : false ||
+                                    itemComponentFn ? itemComponentFn(item) : false ||
+                                itemValue}
+                            </div>
                         </td>
                     )
                 })}
@@ -60,7 +64,7 @@ export default function Table(props) {
     }
     return (
         <div>
-            <table className="table mb-0">
+            <table className="table table-vcenter card-table">
                 <thead>
                     <tr>
                         {columns.map((item) => {

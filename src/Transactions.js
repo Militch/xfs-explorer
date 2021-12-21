@@ -4,6 +4,7 @@ import {
     useLocation,
     useHistory
 } from "react-router-dom";
+import intl from 'react-intl-universal';
 import { Table, Pagination } from './components';
 import { timeformat } from './util';
 import services from './services';
@@ -84,7 +85,7 @@ class Transactions extends React.Component {
         return (
             <div>
                 <h1 className="mb-4">
-                    Transactions
+                    {intl.get('PAGE_TITLE_TXS')}
                 </h1>
                 <div className="card">
                     <div className="table-responsive">

@@ -25,7 +25,7 @@ function PaginationWapper(props) {
     );
   }
   
-class Blocks extends React.Component {
+class Accounts extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -85,7 +85,7 @@ class Blocks extends React.Component {
         return (
             <div>
                 <h1 className="mb-4">
-                    {intl.get('PAGE_TITLE_BLOCKS')}
+                    {intl.get('PAGE_TITLE_ACCOUNTS')}
                 </h1>
                 <div className="card">
                     <div className="table-responsive">
@@ -171,4 +171,4 @@ class Blocks extends React.Component {
         );
     }
 }
-export default Blocks;
+export default Accounts;

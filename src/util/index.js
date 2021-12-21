@@ -25,15 +25,7 @@ function nowtimeformat(last=0, current=(new Date())) {
 
 
 function timeformat(current=(new Date())) {
-    return current.toLocaleString('en-US', {
-        weekday: 'short',
-        month:'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-      });;
+    return current.toISOString();
 }
 
 export {
