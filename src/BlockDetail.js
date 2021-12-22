@@ -3,13 +3,13 @@ import {
     useLocation,
     useHistory
 } from "react-router-dom";
-
+import intl from 'react-intl-universal';
 import { Table, Pagination } from './components';
 import { timeformat } from './util';
 import services from './services';
 import { atto2base } from './util/xfslibutil';
 const api = services.api;
-class BlockDtail extends React.Component {
+class BlockDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,15 +59,16 @@ class BlockDtail extends React.Component {
         return (
             <div>
                 <h1 className="mb-4">
-                    Block Detial
+                {intl.get('PAGE_TITLE_BLOCK_DETAIL')}&nbsp;#&nbsp;{this.state.data.header.height}
                 </h1>
-                <ul className="list-group list-group-flush mb-4">
+                <div className="card mb-4">
+                    <ul className="list-group list-group-flush">
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Block Height:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_BLOCK_HEIGHT')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 <div className="d-flex">
                                     {this.state.data.header.height}
                                 </div>
@@ -76,20 +77,20 @@ class BlockDtail extends React.Component {
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Version:
+                            <div className="col-md-2">
+                                {intl.get('BLOCK_DETAIL_VERSION')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.version}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Prev Block Hash:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_PREV_BLOCK_HASH')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 <a href={`/blocks/${this.state.data.header.hashPrevBlock}`}>
                                     {this.state.data.header.hashPrevBlock}
                                 </a>
@@ -98,108 +99,110 @@ class BlockDtail extends React.Component {
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Hash:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_HASH')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.hash}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Time:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_TIME')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {timestr}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Coinbase:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_COINBASE')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.coinbase}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                State Root Hash:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_STATE_ROOT_HASH')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.stateRoot}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Transactions Root Hash:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_TRANSACTIONS_ROOT_HASH')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.transactionsRoot}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Receipts Root Hash:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_RECEIPTS_ROOT_HASH')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.receiptsRoot}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Gas Limit:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_GAS_LIMIT')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.gasLimit}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Gas Used:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_GAS_USED')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.gasUsed}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Bits:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_BITS')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.bits}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Nonce:
+                            <div className="col-md-2">
+                            {intl.get('BLOCK_DETAIL_NONCE')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.header.nonce}
                             </div>
                         </div>
                     </li>
-                </ul>
+                    </ul>
+                </div>
+               
                 <div className="card">
                     <div className="card-header">
-                        TRANSACTIONS
+                        {intl.get('BLOCK_DETAIL_TRANSACTIONS')}
                     </div>
                     <div className="table-responsive">
                         <Table columns={[
@@ -213,19 +216,6 @@ class BlockDtail extends React.Component {
                                                 {item.hash}
                                             </a>
                                         </div>
-                                    );
-                                }
-                            },
-                            {
-                                field: 'timestamp', name: 'Time',
-                                tdStyle: { width: '230px' },
-                                render: (item) => {
-                                    let time = parseInt(item.timestamp);
-                                    const timestr = timeformat(new Date(time * 1000));
-                                    return (
-                                        <span className="fs-6">
-                                            {timestr}
-                                        </span>
                                     );
                                 }
                             },
@@ -275,4 +265,4 @@ class BlockDtail extends React.Component {
     }
 }
 
-export default BlockDtail;
+export default BlockDetail;

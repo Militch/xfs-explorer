@@ -476,20 +476,6 @@ class Home extends React.Component {
                                             );
                                         }
                                     },
-                                    // {
-                                    //     field: 'timestamp', name: intl.get('HOME_LATEST_TRANSACTIONS_TIME'),
-                                    //     tdStyle: { width: '250px',...this.state.globalTdStyle },
-                                    //     render: (item) => {
-                                    //         let t = parseInt(item.timestamp);
-                                    //         let datetime = new Date(t * 1000);
-                                    //         const timestr = timeformat(datetime);
-                                    //         return (
-                                    //             <span>
-                                    //                 {timestr}
-                                    //             </span>
-                                    //         );
-                                    //     }
-                                    // },
                                     {
                                         name: intl.get('HOME_LATEST_TRANSACTIONS_ADDRESS'),
                                         tdStyle: { ...this.state.globalTdStyle },

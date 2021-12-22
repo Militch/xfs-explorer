@@ -16,6 +16,8 @@ function PageItem(props) {
 
 export default function Pageination(props) {
     let { current, pageSize, total, pathname } = props;
+    let { firstLableText, pageLableText, lastLableText } = props;
+    console.log('fir', firstLableText);
     current = parseInt(current);
     pageSize = parseInt(pageSize);
     total = parseInt(total);
@@ -51,14 +53,14 @@ export default function Pageination(props) {
             <ul className="pagination m-0 ms-auto">
                 <PageItem href={`${pathname}?p=1`} 
                 disabled={firstDisabled()}>
-                    First
+                    {firstLableText||'First'}
                 </PageItem>
                 <PageItem href={`${pathname}?p=${current-1}`} 
                 disabled={privPageDisabled()}>
                     &laquo;
                 </PageItem>
                 <PageItem>
-                    Page {current}
+                    {pageLableText||'Page'} {current}
                 </PageItem>
                 <PageItem href={`${pathname}?p=${current+1}`} 
                 disabled={nextPageDisabled()}>
@@ -66,7 +68,7 @@ export default function Pageination(props) {
                 </PageItem>
                 <PageItem href={`${pathname}?p=${maxpage()}`}
                  disabled={lastPageDisabled()}>
-                    Last
+                    {lastLableText||'Last'}
                 </PageItem>
             </ul>
         </div>

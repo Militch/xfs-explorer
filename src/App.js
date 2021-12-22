@@ -18,7 +18,7 @@ import Home from './Home';
 import Blocks from './Blocks';
 import Accounts from "./Accounts";
 import Transactions from './Transactions';
-import BlockDetial from './BlockDetail';
+import BlockDetail from './BlockDetail';
 import TxDetail from './TxDetail';
 import AddressDetail from './AddressDetail';
 import classNames from 'classnames';
@@ -123,7 +123,8 @@ class App extends React.Component {
   getCurrentNetwork() {
     let currentNetworkId = window.sessionStorage.getItem('_network');
     currentNetworkId = currentNetworkId || getUrlParams('network');
-    return _.find(SUPPOER_NETWORKS, { id: currentNetworkId }) || _.find(SUPPOER_NETWORKS, { id: 0 });
+    let n = _.find(SUPPOER_NETWORKS, { id: currentNetworkId });
+    return n || _.find(SUPPOER_NETWORKS, { id: '0' });
   }
   getCurrentLocale() {
     let currentLocale = window.sessionStorage.getItem('_lang');
@@ -266,22 +267,14 @@ class App extends React.Component {
           marginTop: '2.25rem',
         }}>
           <Switch>
-            <Route exact path="/" component={Home}>
-            </Route>
-            <Route exact path="/blocks" component={Blocks}>
-            </Route>
-            <Route exact path="/accounts" component={Accounts}>
-            </Route>
-            <Route path="/blocks/:hash" component={BlockDetial}>
-            </Route>
-            <Route exact path="/txs" component={Transactions}>
-            </Route>
-            <Route path="/txs/:hash" component={TxDetail}>
-            </Route>
-            <Route path="/address/:addr" component={AddressDetail}>
-            </Route>
-            <Route path="/404" component={ErrorPage}>
-            </Route>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/blocks" component={Blocks}/>
+            <Route exact path="/accounts" component={Accounts} />
+            <Route exact path="/a/" component={BlockDetail}/>
+            <Route exact path="/txs" component={Transactions}/>
+            <Route path="/txs/:hash" component={TxDetail}/>
+            <Route path="/address/:addr" component={AddressDetail}/>
+            <Route path="/404" component={ErrorPage}/>
           </Switch>
         </main>
         <div className="container">
