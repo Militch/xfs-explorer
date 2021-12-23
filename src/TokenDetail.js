@@ -9,7 +9,7 @@ import { timeformat } from './util';
 import services from './services';
 import { atto2base } from './util/xfslibutil';
 const api = services.api;
-class BlockDetail extends React.Component {
+class TokenDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,22 +19,14 @@ class BlockDetail extends React.Component {
                 paddingBottom: '1rem'  
             },
             data: {
-                header: {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 4,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
+                token: {
+                    name: "NersCoin",
+                    symbol: 'NER',
+                    decimals: 18,
+                    totalSupply: 9908,
+                    address: 413,
+                    txs: 64,
+                    creater: 'kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5'
                 },
                 transactions: [
                     
@@ -59,23 +51,24 @@ class BlockDetail extends React.Component {
         }
     }
     render() {
-        let time = parseInt(this.state.data.header.timestamp);
-        const timestr = timeformat(new Date(time * 1000));
+        // let time = parseInt(this.state.data.header.timestamp);
+        // const timestr = timeformat(new Date(time * 1000));
+        const timestr = 'timeformat(new Date(time * 1000))';
         return (
             <div>
                 <h1 className="mb-4">
-                {intl.get('PAGE_TITLE_BLOCK_DETAIL')}&nbsp;#&nbsp;{this.state.data.header.height}
+                {intl.get('PAGE_TITLE_TOKEN_DETAIL')}
                 </h1>
                 <div className="card mb-4">
                     <ul className="list-group list-group-flush">
                     <li className="list-group-item py-3">
                         <div className="row">
                             <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_BLOCK_HEIGHT')}:
+                            {intl.get('TOKENS_DETAIL_NAME')}:
                             </div>
                             <div className="col-md-10">
                                 <div className="d-flex">
-                                    {this.state.data.header.height}
+                                    {this.state.data.token.name}
                                 </div>
                             </div>
                         </div>
@@ -83,21 +76,11 @@ class BlockDetail extends React.Component {
                     <li className="list-group-item py-3">
                         <div className="row">
                             <div className="col-md-2">
-                                {intl.get('BLOCK_DETAIL_VERSION')}:
+                            {intl.get('TOKENS_DETAIL_CREATER')}:
                             </div>
                             <div className="col-md-10">
-                                {this.state.data.header.version}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_PREV_BLOCK_HASH')}:
-                            </div>
-                            <div className="col-md-10">
-                                <a href={`/blocks/${this.state.data.header.hashPrevBlock}`}>
-                                    {this.state.data.header.hashPrevBlock}
+                                <a href={`/txs/${this.state.data.creater}`}>
+                                    {this.state.data.token.creater}
                                 </a>
                             </div>
                         </div>
@@ -105,114 +88,53 @@ class BlockDetail extends React.Component {
                     <li className="list-group-item py-3">
                         <div className="row">
                             <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_HASH')}:
+                                {intl.get('TOKENS_DETAIL_SYMBOL')}:
                             </div>
                             <div className="col-md-10">
-                                {this.state.data.header.hash}
+                                {this.state.data.token.symbol}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
                             <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_TIME')}:
+                                {intl.get('TOKENS_DETAIL_DECIMALS')}:
                             </div>
                             <div className="col-md-10">
-                                {timestr}
+                                {this.state.data.token.decimals}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
                             <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_COINBASE')}:
+                                {intl.get('TOKENS_DETAIL_TOTAL_SUPPLY')}:
                             </div>
                             <div className="col-md-10">
-                                {this.state.data.header.coinbase}
+                                {this.state.data.token.totalSupply}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
                             <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_STATE_ROOT_HASH')}:
+                            {intl.get('TOKENS_DETAIL_ADDRESS')}:
                             </div>
                             <div className="col-md-10">
-                                {this.state.data.header.stateRoot}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_TRANSACTIONS_ROOT_HASH')}:
-                            </div>
-                            <div className="col-md-10">
-                                {this.state.data.header.transactionsRoot}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_RECEIPTS_ROOT_HASH')}:
-                            </div>
-                            <div className="col-md-10">
-                                {this.state.data.header.receiptsRoot}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_GAS_LIMIT')}:
-                            </div>
-                            <div className="col-md-10">
-                                {this.state.data.header.gasLimit}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_GAS_USED')}:
-                            </div>
-                            <div className="col-md-10">
-                                {this.state.data.header.gasUsed}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_BITS')}:
-                            </div>
-                            <div className="col-md-10">
-                                {this.state.data.header.bits}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-2">
-                            {intl.get('BLOCK_DETAIL_NONCE')}:
-                            </div>
-                            <div className="col-md-10">
-                                {this.state.data.header.nonce}
+                                {this.state.data.token.address}
                             </div>
                         </div>
                     </li>
                     </ul>
                 </div>
-               
                 <div className="card">
                     <div className="card-header">
-                        {intl.get('BLOCK_DETAIL_TRANSACTIONS')}
+                        {intl.get('TOKENS_DETAIL_TRANSACTIONS')}
                     </div>
                     <div className="table-responsive">
                         <Table columns={[
                             {
-                                field: 'hash', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_HASH'),
+                                field: 'hash', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_HASH'),
                                 tdStyle: {...this.state.globalTdStyle, maxWidth: '128px' },
                                 render: (item) => {
                                     return (
@@ -225,7 +147,7 @@ class BlockDetail extends React.Component {
                                 }
                             },
                             {
-                                field: 'from', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_FROM'),
+                                field: 'from', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_FROM'),
                                 tdStyle: {...this.state.globalTdStyle, maxWidth: '120px' },
                                 render: (item) => {
                                     return (
@@ -239,7 +161,7 @@ class BlockDetail extends React.Component {
                                 }
                             },
                             {
-                                field: 'to', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_TO'),
+                                field: 'to', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_TO'),
                                 tdStyle: {...this.state.globalTdStyle, maxWidth: '120px' },
                                 render: (item) => {
                                     return (
@@ -251,7 +173,7 @@ class BlockDetail extends React.Component {
                                     );
                                 }
                             },
-                            { field: 'value', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_VALUE'), 
+                            { field: 'value', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_VALUE'), 
                             thStyle: {textAlign:'right'},
                             tdStyle: {...this.state.globalTdStyle, textAlign:'right'},
                             render: (item)=>{
@@ -265,7 +187,7 @@ class BlockDetail extends React.Component {
                                             </span>
                                 );
                             } },
-                            { field: 'gasFee', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_GAS_FEE'),
+                            { field: 'gasFee', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_GAS_FEE'),
                             thStyle: {textAlign:'right'},
                             tdStyle: {...this.state.globalTdStyle, textAlign:'right'},
                             render: (item)=>{
@@ -288,4 +210,4 @@ class BlockDetail extends React.Component {
     }
 }
 
-export default BlockDetail;
+export default TokenDetail;

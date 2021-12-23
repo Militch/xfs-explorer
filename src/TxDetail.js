@@ -62,13 +62,14 @@ class TXDetail extends React.Component {
                 <h1 className="mb-4">
                     {intl.get('PAGE_TITLE_TX_DETAIL')}
                 </h1>
-                <ul className="list-group list-group-flush mb-4">
+                <div className="card mb-4">
+                <ul className="list-group list-group-flush">
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Transaction Hash:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_HASH')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 <div className="d-flex">
                                     {this.state.data.hash}
                                 </div>
@@ -77,10 +78,10 @@ class TXDetail extends React.Component {
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Status:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_STATUS')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 <div className="d-flex">
                                     {this.state.data.status}
                                 </div>
@@ -90,10 +91,10 @@ class TXDetail extends React.Component {
 
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Block:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_BLOCK')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 <div className="d-flex">
                                     <a href={`/blocks/${this.state.data.blockHash}`}>
                                         {this.state.data.blockHeight}
@@ -104,108 +105,120 @@ class TXDetail extends React.Component {
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Version:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_VERSION')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.version}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Time:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_TIME')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {timestr}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                From:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_FROM')}:
                             </div>
-                            <div className="col-md-9">
-                                {this.state.data.from}
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-3">
-                                To:
-                            </div>
-                            <div className="col-md-9">
-                                {this.state.data.to}
+                            <div className="col-md-10">
+                                <div className="d-flex">
+                                    <a href={`/blocks/${this.state.data.blockHash}`}>
+                                    {this.state.data.from}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Value:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_TO')}:
                             </div>
-                            <div className="col-md-9">
-                                {valuestr} FIX
-                            </div>
-                        </div>
-                    </li>
-                    <li className="list-group-item py-3">
-                        <div className="row">
-                            <div className="col-md-3">
-                                Gas Price:
-                            </div>
-                            <div className="col-md-9">
-                                {this.state.data.gasPrice} AttoFIX
+                            <div className="col-md-10">
+                            <div className="d-flex">
+                                    <a href={`/blocks/${this.state.data.blockHash}`}>
+                                    {this.state.data.to}
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Gas Limit:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_VALUE')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
+                                {valuestr} XFSC
+                            </div>
+                        </div>
+                    </li>
+                    <li className="list-group-item py-3">
+                        <div className="row">
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_GAS_PRICE')}:
+                            </div>
+                            <div className="col-md-10">
+                                {this.state.data.gasPrice} NanoCoin
+                            </div>
+                        </div>
+                    </li>
+                    <li className="list-group-item py-3">
+                        <div className="row">
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_GAS_LIMIT')}:
+                            </div>
+                            <div className="col-md-10">
                                 {this.state.data.gasLimit}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Gas Used:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_GAS_USED')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.gasUsed}
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Gas Fee:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_GAS_FEE')}:
                             </div>
-                            <div className="col-md-9">
-                                {this.state.data.gasFee} AttoFIX
+                            <div className="col-md-10">
+                                {this.state.data.gasFee} XFSC
                             </div>
                         </div>
                     </li>
                     <li className="list-group-item py-3">
                         <div className="row">
-                            <div className="col-md-3">
-                                Nonce:
+                            <div className="col-md-2">
+                            {intl.get('TX_DETAIL_NONCE')}:
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 {this.state.data.nonce}
                             </div>
                         </div>
                     </li>
                 </ul>
+                </div>
+                
                 <div className="card">
                     <div className="card-body">
-                        <h5 className="card-title">Transaction Data</h5>
+                        <h5 className="card-title">
+                        {intl.get('TX_DETAIL_TRANSACTION_DATA')}
+                        </h5>
                         <div className="py-2">
                             <div className="form-check form-check-inline">
                                 <input className="form-check-input"

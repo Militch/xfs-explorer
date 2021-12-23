@@ -25,7 +25,7 @@ function PaginationWapper(props) {
     );
   }
   
-class Accounts extends React.Component {
+class Tokens extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -40,52 +40,28 @@ class Accounts extends React.Component {
             },
             data: [
                 {
-                    address: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    balance: '843513513',
-                    nonce: 1,
-                    stateRoot: '0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d',
-                    type: 'EXTERNAL',
-                    txs: 100
+                    name: "NersCoin",
+                    symbol: 'NER',
+                    decimals: 18,
+                    totalSupply: 9908,
+                    address: 413,
+                    txs: 64
                 },
                 {
-                    address: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    balance: '843513513',
-                    nonce: 1,
-                    stateRoot: '0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d',
-                    type: 'EXTERNAL',
-                    txs: 100
+                    name: "AcertToken",
+                    symbol: 'ACER',
+                    decimals: 10,
+                    totalSupply: 4551,
+                    address: 9999,
+                    txs: 55
                 },
                 {
-                    address: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    balance: '843513513',
-                    nonce: 1,
-                    stateRoot: '0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d',
-                    type: 'EXTERNAL',
-                    txs: 100
-                },
-                {
-                    address: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    balance: '843513513',
-                    nonce: 1,
-                    stateRoot: '0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d',
-                    type: 'CONTRACT',
-                    txs: 100
-                },
-                {
-                    address: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    balance: '843513513',
-                    nonce: 1,
-                    stateRoot: '0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d',
-                    type: 'CONTRACT',
-                    txs: 100
-                },
-                {
-                    address: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    balance: '843513513',
-                    nonce: 1,
-                    stateRoot: '0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d',
-                    type: 'CONTRACT',
-                    txs: 100
+                    name: "FIXCoin",
+                    symbol: 'FIX',
+                    decimals: 18,
+                    totalSupply: 3000000000,
+                    address: 46513,
+                    txs: 906147
                 },
             ],
         }
@@ -121,60 +97,80 @@ class Accounts extends React.Component {
         return (
             <div>
                 <h1 className="mb-4">
-                    {intl.get('PAGE_TITLE_ACCOUNTS')}
+                    {intl.get('PAGE_TITLE_TOKENS')}
                 </h1>
                 <div className="card">
                     <div className="table-responsive">
                         <Table columns={[
                             {
-                                 name: intl.get('ACCOUNTS_ADDRESS'), 
+                                 name: intl.get('TOKENS_NAME'), 
                                 tdStyle:{...this.state.globalTdStyle },
                                 render: (item) => {
                                     return (
-                                        <a href={`/address/${item.address}`}>
-                                            {item.address}
+                                        <a href={`/contract/${item.name}`}>
+                                            {item.name}
                                         </a>
                                     );
                                 }
                             },
                             {
-                                 name: intl.get('ACCOUNTS_TYPE'), 
+                                 name: intl.get('TOKENS_SYMBOL'), 
                                 tdStyle:{...this.state.globalTdStyle, width: '120px' },
                                 render: (item) => {
                                     return (
                                         <span>
-                                            {intl.get(`ACCOUNT_DETAIL_TYPE_${item.type}`)}
+                                            {item.symbol}
                                         </span>
                                     );
                                 }
                             },
                             {
-                                 name: intl.get('ACCOUNTS_TXS'), 
+                                name: intl.get('TOKENS_DECIMALS'), 
+                               tdStyle:{...this.state.globalTdStyle, width: '120px' },
+                               render: (item) => {
+                                   return (
+                                       <span>
+                                           {item.decimals}
+                                       </span>
+                                   );
+                               }
+                           },
+                            {
+                                 name: intl.get('TOKENS_TOTAL_SUPPLY'), 
                                 thStyle: {textAlign:'right'},
                                 tdStyle:{...this.state.globalTdStyle,textAlign:'right', width: '120px' },
                                 render: (item) => {
                                     return (
                                         <span>
-                                            {item.balance}
+                                            {item.totalSupply}
                                         </span>
                                     );
                                 }
                             },
                             {
-                                 name: intl.get('ACCOUNTS_BALANCE'), 
+                                 name: intl.get('TOKENS_ADDRESS'), 
                                  thStyle: {textAlign:'right'},
                                 tdStyle:{...this.state.globalTdStyle, width: '210px',textAlign:'right'},
                                 render: (item) => {
                                     return (
                                         <span>
-                                                {item.balance} 
-                                                <span style={{
-                                                fontSize: '.8rem',
-                                            }}> XFSC</span>
-                                            </span>
+                                            {item.address}
+                                        </span>
                                     );
                                 }
                             },
+                            {
+                                name: intl.get('TOKENS_TXS'), 
+                                thStyle: {textAlign:'right'},
+                               tdStyle:{...this.state.globalTdStyle, width: '210px',textAlign:'right'},
+                               render: (item) => {
+                                   return (
+                                       <span>
+                                           {item.txs}
+                                       </span>
+                                   );
+                               }
+                           },
                         ]} data={this.state.data} click={() => { }} >
                         </Table>
                     </div>
@@ -188,4 +184,4 @@ class Accounts extends React.Component {
         );
     }
 }
-export default Accounts;
+export default Tokens;

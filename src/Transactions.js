@@ -29,7 +29,92 @@ class Transactions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            globalTdStyle: {
+                fontSize:'1rem', 
+                paddingTop: '1rem',
+                paddingBottom: '1rem'  
+            },
             data: [
+                {
+                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    blockHeight: 4,
+                    data: null,
+                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    gasFee: "250000",
+                    gasLimit: "2500",
+                    gasPrice: "100",
+                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                    id: 1,
+                    nonce: 0,
+                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                    timestamp: 1635805918,
+                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                    value: "10000000000000000000",             
+                },
+                {
+                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    blockHeight: 4,
+                    data: null,
+                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    gasFee: "250000",
+                    gasLimit: "2500",
+                    gasPrice: "100",
+                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                    id: 1,
+                    nonce: 0,
+                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                    timestamp: 1635805918,
+                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                    value: "10000000000000000000",             
+                },
+                {
+                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    blockHeight: 4,
+                    data: null,
+                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    gasFee: "250000",
+                    gasLimit: "2500",
+                    gasPrice: "100",
+                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                    id: 1,
+                    nonce: 0,
+                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                    timestamp: 1635805918,
+                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                    value: "10000000000000000000",             
+                },
+                {
+                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    blockHeight: 4,
+                    data: null,
+                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    gasFee: "250000",
+                    gasLimit: "2500",
+                    gasPrice: "100",
+                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                    id: 1,
+                    nonce: 0,
+                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                    timestamp: 1635805918,
+                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                    value: "10000000000000000000",             
+                },
+                {
+                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
+                    blockHeight: 4,
+                    data: null,
+                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
+                    gasFee: "250000",
+                    gasLimit: "2500",
+                    gasPrice: "100",
+                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
+                    id: 1,
+                    nonce: 0,
+                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
+                    timestamp: 1635805918,
+                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
+                    value: "10000000000000000000",             
+                },
                 {
                     blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
                     blockHeight: 4,
@@ -91,8 +176,8 @@ class Transactions extends React.Component {
                     <div className="table-responsive">
                         <Table columns={[
                             {
-                                field: 'hash', name: 'Hash',
-                                tdStyle: { maxWidth: '128px' },
+                                field: 'hash', name: intl.get('TXS_HASH'),
+                                tdStyle: {...this.state.globalTdStyle, maxWidth: '128px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -104,8 +189,8 @@ class Transactions extends React.Component {
                                 }
                             },
                             {
-                                field: 'blockHeight', name: 'Block',
-                                tdStyle: { width: '6%' },
+                                field: 'blockHeight', name: intl.get('TXS_BLOCK'),
+                                tdStyle: {...this.state.globalTdStyle, width: '6%' },
                                 render: (item) => {
                                     return (
                                         <a href={`/blocks/${item.blockHash}`}>
@@ -115,8 +200,8 @@ class Transactions extends React.Component {
                                 }
                             },
                             {
-                                field: 'timestamp', name: 'Time',
-                                tdStyle: { width: '230px' },
+                                field: 'timestamp', name: intl.get('TXS_TIME'),
+                                tdStyle: {...this.state.globalTdStyle, width: '230px' },
                                 render: (item) => {
                                     let time = parseInt(item.timestamp);
                                     const timestr = timeformat(new Date(time * 1000));
@@ -128,8 +213,8 @@ class Transactions extends React.Component {
                                 }
                             },
                             {
-                                field: 'from', name: 'From',
-                                tdStyle: { maxWidth: '120px' },
+                                field: 'from', name: intl.get('TXS_FROM'),
+                                tdStyle: {...this.state.globalTdStyle, maxWidth: '120px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -142,8 +227,8 @@ class Transactions extends React.Component {
                                 }
                             },
                             {
-                                field: 'to', name: 'To',
-                                tdStyle: { maxWidth: '120px' },
+                                field: 'to', name: intl.get('TXS_TO'),
+                                tdStyle: {...this.state.globalTdStyle, maxWidth: '120px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -154,22 +239,32 @@ class Transactions extends React.Component {
                                     );
                                 }
                             },
-                            { field: 'value', name: 'Value', 
+                            { field: 'value', name: intl.get('TXS_VALUE'), 
+                            thStyle: {textAlign:'right'},
+                            tdStyle: {...this.state.globalTdStyle, textAlign:'right'},
                             render: (item)=>{
                                 let val = atto2base(item.value);
                                 return (
                                     <span>
-                                        {val} FIX
-                                    </span>
+                                                {val} 
+                                                <span style={{
+                                                fontSize: '.8rem',
+                                            }}> XFSC</span>
+                                            </span>
                                 );
                             } },
-                            { field: 'gasFee', name: 'Fee',
+                            { field: 'gasFee', name: intl.get('TXS_GAS_FEE'),
+                            thStyle: {textAlign:'right'},
+                            tdStyle: {...this.state.globalTdStyle, textAlign:'right'},
                             render: (item)=>{
                                 // let val = atto2base(item.value);
                                 return (
                                     <span>
-                                        {item.gasFee}
-                                    </span>
+                                                {item.gasFee} 
+                                                <span style={{
+                                                fontSize: '.8rem',
+                                            }}> XFSC</span>
+                                            </span>
                                 );
                             } },
                         ]} data={this.state.data} click={() => { }} >

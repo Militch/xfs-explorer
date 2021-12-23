@@ -57,7 +57,8 @@ class Blocks extends React.Component {
                     timestamp: 1635806005,
                     transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
                     txCount: 1,
-                    version: 0
+                    version: 0,
+                    reward: 1000,
                 },
                 {
                     bits: 4278190109,
@@ -74,7 +75,8 @@ class Blocks extends React.Component {
                     timestamp: 1635806005,
                     transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
                     txCount: 1,
-                    version: 0
+                    version: 0,
+                    reward: 1000,
                 },
                 {
                     bits: 4278190109,
@@ -91,7 +93,8 @@ class Blocks extends React.Component {
                     timestamp: 1635806005,
                     transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
                     txCount: 1,
-                    version: 0
+                    version: 0,
+                    reward: 1000,
                 },
                 {
                     bits: 4278190109,
@@ -108,7 +111,8 @@ class Blocks extends React.Component {
                     timestamp: 1635806005,
                     transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
                     txCount: 1,
-                    version: 0
+                    version: 0,
+                    reward: 1000,
                 },
             ],
         }

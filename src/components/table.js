@@ -32,6 +32,7 @@ function mergeTableData(columns = [], data = []) {
 
 export default function Table(props) {
     let { columns, data, loading, emptyRender } = props;
+    let { emptyText} = props;
     columns = columns || [];
     data = data || [];
     console.log('table-c', columns);
@@ -51,7 +52,9 @@ export default function Table(props) {
                         }}>
                             <img src={empty} style={{ height: '100%' }} alt='nodata' />
                         </div>
-                        <h5>No data available</h5>
+                        <h5>
+                            {emptyText||'No data available'}
+                        </h5>
                     </div>
                 </td>
             );

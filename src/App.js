@@ -20,30 +20,12 @@ import Accounts from "./Accounts";
 import Transactions from './Transactions';
 import BlockDetail from './BlockDetail';
 import TxDetail from './TxDetail';
-import AddressDetail from './AddressDetail';
+import AccountDetail from './AccountDetail';
+import Tokens from './Tokens';
+import TokenDetail from './TokenDetail';
 import classNames from 'classnames';
 import ErrorPage from './404';
 
-function NavLink(props) {
-  let location = useLocation();
-  let { href } = props;
-  let { pathname } = location;
-  let hrefmatch = () => {
-    return (href && href !== '/' && pathname.startsWith(href))
-      || (href === '/' && pathname === href);
-  }
-  let classnames = classNames(
-    {
-      [`text-white`]: hrefmatch(),
-      [`text-white-50`]: !hrefmatch(),
-    }, 'nav-link', 'px-2'
-  )
-  return (
-    <a href={href} className={classnames}>
-      {props.children}
-    </a>
-  );
-}
 function NavItem({ href, children, ...props }) {
   let location = useLocation();
   let { pathname } = location;
@@ -270,10 +252,16 @@ class App extends React.Component {
             <Route exact path="/" component={Home}/>
             <Route exact path="/blocks" component={Blocks}/>
             <Route exact path="/accounts" component={Accounts} />
-            <Route exact path="/a/" component={BlockDetail}/>
             <Route exact path="/txs" component={Transactions}/>
-            <Route path="/txs/:hash" component={TxDetail}/>
-            <Route path="/address/:addr" component={AddressDetail}/>
+            {/* <Route path="/d" component={TxDetail}/> */}
+            
+            <Route path="/tokens" component={Tokens}/>
+
+            
+            <Route exact path="/a" component={BlockDetail}/>
+            <Route path="/b" component={TxDetail}/>
+            <Route path="/c" component={AccountDetail}/>
+            <Route path="/d" component={TokenDetail}/>
             <Route path="/404" component={ErrorPage}/>
           </Switch>
         </main>
