@@ -1,4 +1,5 @@
 {
+    "HINT_MAINNET_DISABLE": "暂不支持主网数据预览",
     "NAV_NETWORK": "当前网络",
     "NAV_NETWORK_MAINNET": "主网",
     "NAV_NETWORK_TESTNET": "测试网",

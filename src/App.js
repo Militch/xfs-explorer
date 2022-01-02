@@ -68,7 +68,8 @@ const SUPPOER_NETWORKS = [
     value: 'TESTNET'
   },
 ];
-
+const DEFAULT_NETWORK = '1';
+const MAINNET_DISABLE = true;
 function getUrlParams(key) {
   const params = new URLSearchParams(window.location.search);
   return params.get(key);
@@ -106,7 +107,7 @@ class App extends React.Component {
     let currentNetworkId = window.sessionStorage.getItem('_network');
     currentNetworkId = currentNetworkId || getUrlParams('network');
     let n = _.find(SUPPOER_NETWORKS, { id: currentNetworkId });
-    return n || _.find(SUPPOER_NETWORKS, { id: '0' });
+    return n || _.find(SUPPOER_NETWORKS, { id: DEFAULT_NETWORK });
   }
   getCurrentLocale() {
     let currentLocale = window.sessionStorage.getItem('_lang');
@@ -121,6 +122,10 @@ class App extends React.Component {
     window.location.search = `?lang=${locale}`;
   }
   onChangeNetwork({ netid }) {
+    if (MAINNET_DISABLE && netid === '0') {
+      alert(intl.get('HINT_MAINNET_DISABLE'));
+      return;
+    }
     window.sessionStorage.setItem('_network', netid);
     window.location.search = `?network=${netid}`;
   }

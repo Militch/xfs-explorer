@@ -127,7 +127,7 @@ class AccountDetail extends React.Component {
                     </li>
                     </ul>
                 </div>
-                <div className="card mb-4 d-none">
+                <div className="card mb-4">
                         <div className="card-body">
                          <h5 className="card-title">
                             {intl.get('ACCOUNT_DETAIL_CONTRACT_CODE')}

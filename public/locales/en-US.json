@@ -1,4 +1,5 @@
 {
+    "HINT_MAINNET_DISABLE": "Main network is not supported",
     "NAV_NETWORK": "NETWORK",
     "NAV_NETWORK_MAINNET": "MAINNET",
     "NAV_NETWORK_TESTNET": "TESTNET",
