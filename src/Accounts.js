@@ -120,23 +120,10 @@ class Accounts extends React.Component {
                     {intl.get('PAGE_TITLE_ACCOUNTS')}
                 </h1>
                 <div className="card">
-                    <div className="table-responsive">
+                    <div className="card-table table-responsive">
                         <Table columns={[
-                            
-                            {
-                                name: intl.get('ACCOUNTS_CREATE_TIME'),
-                                tdStyle: { width: '180px', ...this.state.globalTdStyle},
-                                render: (item) => {
-                                    return (
-                                        <span className="fs-6">
-                                            {item.createTime}
-                                        </span>
-                                    );
-                                }
-                            },
                             {
                                 name: intl.get('ACCOUNTS_ADDRESS'),
-                                tdStyle: { ...this.state.globalTdStyle },
                                 render: (item) => {
                                     return (
                                         <a href={`/accounts/${item.address}`}>
@@ -146,29 +133,10 @@ class Accounts extends React.Component {
                                 }
                             },
 
-                            // {
-                            //     name: intl.get('ACCOUNTS_TYPE'),
-                            //     tdStyle: { ...this.state.globalTdStyle, width: '120px' },
-                            //     render: typeFormat
-                            // },
-
-                            {
-                                name: intl.get('ACCOUNTS_TXS'),
-                                thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right', width: '120px' },
-                                render: (item) => {
-                                    return (
-                                        <span>
-                                            {/* {item.balance} */}
-                                            {defaultIntNumberFormat(item.nonce)}
-                                        </span>
-                                    );
-                                }
-                            },
                             {
                                 name: intl.get('ACCOUNTS_BALANCE'),
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, width: '210px', textAlign: 'right' },
+                                tdStyle: {textAlign: 'right' },
                                 render: (item) => {
                                     let val = atto2base(item.balance);
                                     return (
@@ -182,10 +150,23 @@ class Accounts extends React.Component {
                                 }
                             },
                             {
+                                name: intl.get('ACCOUNTS_TXS'),
+                                thStyle: { textAlign: 'right' },
+                                tdStyle: { textAlign: 'right',},
+                                render: (item) => {
+                                    return (
+                                        <span>
+                                            {/* {item.balance} */}
+                                            {defaultIntNumberFormat(item.nonce)}
+                                        </span>
+                                    );
+                                }
+                            },
+                            {
                                 name: intl.get('ACCOUNTS_UPDATE_TIME'),
 
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { width: '180px', ...this.state.globalTdStyle, textAlign: 'right' },
+                                tdStyle: { textAlign: 'right' },
                                 render: (item) => {
                                     return (
                                         <span className="fs-6">

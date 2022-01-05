@@ -48,6 +48,7 @@
     "HOME_LATEST_TRANSACTIONS_TIME": "时间",
     "HOME_LATEST_TRANSACTIONS_VALUE": "交易数量",
     "HOME_LATEST_TRANSACTIONS_ADDRESS": "交易地址",
+    "HOME_TXCOUNT_BY_DAY_VOLUME": "交易量",
     "BLOCKS_HEIGHT": "区块高度",
     "BLOCKS_HASH": "区块哈希",
     "BLOCKS_TIME": "封装时间",

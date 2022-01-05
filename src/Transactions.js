@@ -109,11 +109,10 @@ class Transactions extends React.Component {
                     {intl.get('PAGE_TITLE_TXS')}
                 </h1>
                 <div className="card">
-                    <div className="table-responsive">
+                    <div className="card-table table-responsive">
                         <Table columns={[
                             {
                                 name: intl.get('TXS_TIME'),
-                                tdStyle: { ...this.state.globalTdStyle, width: '180px' },
                                 render: (item) => {
                                     return (
                                         <span className="fs-6">
@@ -124,7 +123,7 @@ class Transactions extends React.Component {
                             },
                             {
                                 field: 'hash', name: intl.get('TXS_HASH'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '160px' },
+                                tdStyle: { maxWidth: '180px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -137,7 +136,6 @@ class Transactions extends React.Component {
                             },
                             {
                                 field: 'blockHeight', name: intl.get('TXS_BLOCK'),
-                                tdStyle: { ...this.state.globalTdStyle, width: '100px' },
                                 render: (item) => {
                                     return (
                                         <a href={`/blocks/${item.blockHash}`}>
@@ -149,7 +147,7 @@ class Transactions extends React.Component {
                             
                             {
                                 field: 'from', name: intl.get('TXS_FROM'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '120px' },
+                                tdStyle: { maxWidth: '120px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -163,7 +161,7 @@ class Transactions extends React.Component {
                             },
                             {
                                 field: 'to', name: intl.get('TXS_TO'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '120px' },
+                                tdStyle: {maxWidth: '120px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -177,7 +175,7 @@ class Transactions extends React.Component {
                             {
                                 field: 'value', name: intl.get('TXS_VALUE'),
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                tdStyle: { textAlign: 'right' },
                                 render: (item) => {
                                     let val = atto2base(item.value);
                                     return (
@@ -193,7 +191,7 @@ class Transactions extends React.Component {
                             {
                                 field: 'gasFee', name: intl.get('TXS_GAS_FEE'),
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                tdStyle: { textAlign: 'right' },
                                 render: (item) => {
                                     let val = atto2base(item.gasFee);
                                     return (

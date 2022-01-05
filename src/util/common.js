@@ -73,8 +73,14 @@ function sortList(data=[],fn) {
 }
 
 function hashesUnitCover(num) {
-  const units = ['','K', 'M', 'G', 'T', 'P', 'E'];
+  const units = ['K', 'M', 'G', 'T', 'P', 'E'];
   const multiplier = 1000;
+  if (num < multiplier){
+    return {
+      num: num,
+      unit: '',
+    }
+  }
   for (let i=0;i<units.length;i++){
     num /= multiplier;
     if (num < multiplier){

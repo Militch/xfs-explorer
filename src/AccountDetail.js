@@ -273,11 +273,10 @@ class AccountDetail extends React.Component {
                     <div className="card-header">
                         {intl.get('ACCOUNT_DETAIL_TRANSACTIONS')}
                     </div>
-                    <div className="table-responsive">
+                    <div className="card-table table-responsive">
                         <Table columns={[
                             {
                                 name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_TIME'),
-                                tdStyle: { ...this.state.globalTdStyle, width: '180px' },
                                 render: (item) => {
                                     return (
                                         <span className="fs-6">
@@ -288,7 +287,7 @@ class AccountDetail extends React.Component {
                             },
                             {
                                 field: 'hash', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_HASH'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '160px' },
+                                tdStyle: { maxWidth: '160px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -301,7 +300,7 @@ class AccountDetail extends React.Component {
                             },
                             {
                                 field: 'to', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_TO'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '160px' },
+                                tdStyle: { maxWidth: '160px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -315,7 +314,7 @@ class AccountDetail extends React.Component {
                             {
                                 field: 'value', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_VALUE'),
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                tdStyle: { textAlign: 'right' },
                                 render: (item) => {
                                     let val = atto2base(item.value);
                                     return (
@@ -331,7 +330,7 @@ class AccountDetail extends React.Component {
                             {
                                 field: 'gasFee', name: intl.get('ACCOUNT_DETAIL_TRANSACTIONS_GAS_FEE'),
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                tdStyle: {textAlign: 'right' },
                                 render: (item) => {
                                     let val = atto2base(item.gasFee);
                                     return (

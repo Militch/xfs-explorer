@@ -101,11 +101,10 @@ class Blocks extends React.Component {
                     {intl.get('PAGE_TITLE_BLOCKS')}
                 </h1>
                 <div className="card">
-                    <div className="table-responsive">
+                    <div className="card-table table-responsive">
                         <Table columns={[
                             {
                                 field: 'height', name: intl.get('BLOCKS_HEIGHT'), 
-                                tdStyle:{ width: '100px', ...this.state.globalTdStyle },
                                 render: (item) => {
                                     return (
                                         <a href={`/blocks/${item.hash}`}>
@@ -116,7 +115,7 @@ class Blocks extends React.Component {
                             },
                             {
                                 field: 'hash', name: intl.get('BLOCKS_HASH'), 
-                                tdStyle:{ maxWidth: '180px', ...this.state.globalTdStyle  },
+                                tdStyle:{ maxWidth: '180px', },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -129,7 +128,6 @@ class Blocks extends React.Component {
                             },
                             {
                                 field: 'timestamp', name: intl.get('BLOCKS_TIME'),
-                                tdStyle:{ width: '180px', ...this.state.globalTdStyle  },
                                 render: (item) => {
                                     let time = parseInt(item.timestamp);
                                     const timestr = timeformat(new Date(time * 1000));
@@ -142,7 +140,7 @@ class Blocks extends React.Component {
                             },
                             {
                                 field: 'coinbase', name: intl.get('BLOCKS_MINER'),
-                                tdStyle:{ maxWidth: '180px', ...this.state.globalTdStyle  },
+                                tdStyle:{ maxWidth: '180px',},
                                  render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -155,7 +153,7 @@ class Blocks extends React.Component {
                             },
                             { field: 'txCount', name: intl.get('BLOCKS_TXS'), 
                             thStyle: {textAlign: 'right'},
-                            tdStyle: {...this.state.globalTdStyle, textAlign: 'right' },
+                            tdStyle: {textAlign: 'right' },
                             render: (item)=>{
                                 return (
                                     <span>
@@ -166,7 +164,7 @@ class Blocks extends React.Component {
                          },
                             { field: 'gasUsed', name: intl.get('BLOCKS_GAS_USED'),
                             thStyle: {textAlign: 'right'},
-                            tdStyle: {...this.state.globalTdStyle, textAlign: 'right' },
+                            tdStyle: {textAlign: 'right' },
                               render: (item)=>{
                                   return (
                                       <span>
@@ -176,7 +174,7 @@ class Blocks extends React.Component {
                               }},
                             { field: 'gasLimit', name: intl.get('BLOCKS_GAS_LIMIT'),
                             thStyle: {textAlign: 'right'},
-                            tdStyle: {...this.state.globalTdStyle, textAlign: 'right'  },
+                            tdStyle: {textAlign: 'right'  },
                             render: (item)=>{
                                 return (
                                     <span>
@@ -186,7 +184,7 @@ class Blocks extends React.Component {
                             }},
                             { field: 'rewards', name: intl.get('BLOCKS_REWARD'), 
                                     thStyle: {textAlign: 'right'},
-                                    tdStyle: { textAlign: 'right', ...this.state.globalTdStyle  },
+                                    tdStyle: { textAlign: 'right', },
                                     render: (item) => {
                                         
                                         let value = atto2base(item.rewards);

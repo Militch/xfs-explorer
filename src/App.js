@@ -338,7 +338,7 @@ class App extends React.Component {
         </main>
         <div className="container">
           <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p className="col-md-4 mb-0 text-muted">Copyright &copy; 2021 Starx Labs, Inc</p>
+            <p className="col-md-4 mb-0 text-muted">Copyright &copy; {new Date().getFullYear()} Starx Labs, Inc</p>
             <ul className="nav col-md-4 justify-content-end">
               <li className="nav-item">
                 <a href="/" className="nav-link px-2 text-muted">

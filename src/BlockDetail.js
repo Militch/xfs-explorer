@@ -261,11 +261,11 @@ class BlockDetail extends React.Component {
                     <div className="card-header">
                         {intl.get('BLOCK_DETAIL_TRANSACTIONS')}
                     </div>
-                    <div className="table-responsive">
+                    <div className="card-table table-responsive">
                         <Table columns={[
                             {
                                 field: 'hash', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_HASH'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '160px' },
+                                tdStyle: {maxWidth: '180px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -278,7 +278,7 @@ class BlockDetail extends React.Component {
                             },
                             {
                                 field: 'from', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_FROM'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '160px' },
+                                tdStyle: { maxWidth: '180px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -292,7 +292,7 @@ class BlockDetail extends React.Component {
                             },
                             {
                                 field: 'to', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_TO'),
-                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '160px' },
+                                tdStyle: { maxWidth: '180px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -306,7 +306,7 @@ class BlockDetail extends React.Component {
                             {
                                 field: 'value', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_VALUE'),
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                tdStyle: { textAlign: 'right' },
                                 render: (item) => {
                                     let val = atto2base(item.value);
                                     return (
@@ -322,7 +322,7 @@ class BlockDetail extends React.Component {
                             {
                                 field: 'gasFee', name: intl.get('BLOCK_DETAIL_TRANSACTIONS_GAS_FEE'),
                                 thStyle: { textAlign: 'right' },
-                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                tdStyle: { textAlign: 'right' },
                                 render: (item) => {
                                     let val = atto2base(item.gasFee);
                                     return (

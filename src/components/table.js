@@ -16,7 +16,10 @@ function mergeTableData(columns = [], data = []) {
                     const tdstyle = item2.tdStyle;
                     const tdcss = item2.tdClassName;
                     return (
-                        <td key={itemKey} style={tdstyle} className={tdcss} data-th={itemKey}>
+                        <td key={itemKey} style={{...tdstyle,fontSize:'1rem', 
+                        paddingTop: '1rem',
+                        paddingBottom: '1rem',
+                        whiteSpace: 'nowrap'}} className={tdcss} data-th={itemKey}>
                             <div className='td-wrap'>
                                 {itemRenderFn ? itemRenderFn(item) : false ||
                                     itemComponentFn ? itemComponentFn(item) : false ||
@@ -65,8 +68,7 @@ export default function Table(props) {
         );
     }
     return (
-        <div>
-            <table className="table table-vcenter card-table">
+        <table className="table table-vcenter" >
                 <thead>
                     <tr>
                         {columns.map((item) => {
@@ -75,7 +77,7 @@ export default function Table(props) {
                             name = name || '';
                             return (
                                 <th className={thClassName}
-                                    style={thStyle}
+                                    style={{...thStyle,whiteSpace: 'nowrap',}}
                                     key={field}>
                                     {name}
                                 </th>
@@ -87,6 +89,5 @@ export default function Table(props) {
                     {!data || data.length === 0 ? plview({ emptyRender }) : mergeTableData(columns, data)}
                 </tbody>
             </table>
-        </div>
     );
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiCli = axios.create({
-    baseURL: 'http://localhost:8083',
+    baseURL: 'http://192.168.124.2:8083',
     timeout: 1000
 });
 
@@ -134,6 +134,20 @@ export function requestSearch(options){
     return new Promise((resolve, reject)=>{
         apiCli.request({
             url: `/search`,
+            method: 'GET',
+            ...(options||{})
+        }).then(res=>{
+            resolve(res.data);
+        }).catch(err=>{
+            reject(err.data);
+        });
+    });
+}
+
+export function getTxCountByDay(options){
+    return new Promise((resolve, reject)=>{
+        apiCli.request({
+            url: '/tx_count_by_day',
             method: 'GET',
             ...(options||{})
         }).then(res=>{

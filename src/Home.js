@@ -6,6 +6,7 @@ import { nowtimeformat, timeformat } from './util';
 import { defaultIntNumberFormat,defaultrNumberFormatFF2,defaultrNumberFormatFF4,hashesUnitCover } from './util/common';
 import { atto2base } from './util/xfslibutil';
 import Chart from "react-apexcharts";
+import moment from 'moment';
 const api = services.api;
 
 
@@ -32,11 +33,11 @@ class Home extends React.Component {
             globalTdStyle: {
                 fontSize:'1rem', 
                 paddingTop: '1rem',
-                paddingBottom: '1rem'  
+                paddingBottom: '1rem',
+                whiteSpace: 'nowrap',
             },
-            options: {
+            txCountByDayChartOptions: {
                 chart: {
-
                     id: "basic-bar",
                     animations: {
                         enabled: false
@@ -49,7 +50,7 @@ class Home extends React.Component {
                     }
                 },
                 xaxis: {
-                    categories: ['11-15', '12-16', '12-17', '12-18', '12-19', '12-20', '12-21'],
+                    categories: ['00-00', '00-00', '00-00', '00-00', '00-00', '00-00', '00-00'],
                     labels: {
                         padding: 0,
                     },
@@ -80,10 +81,10 @@ class Home extends React.Component {
                     show: true,
                 },
             },
-            series: [
+            txCountByDayChartSeries: [
                 {
-                    name: "Volume",
-                    data: [30, 40, 45, 50, 49, 60, 70]
+                    name: intl.get('HOME_TXCOUNT_BY_DAY_VOLUME'),
+                    data: [0, 0, 0, 0, 0, 0, 0]
                 }
             ],
             latestBlocks: [
@@ -132,12 +133,42 @@ class Home extends React.Component {
             ],
         }
     }
+    
     async componentDidMount() {
         let status = await api.getStatus();
-        console.log('status', status);
         let latest = await api.getLatest();
         const { blocks, txs } = latest;
         this.setState({status: status, latestBlocks: blocks, latestTxs: txs});
+
+        let txCountByDay = await api.getTxCountByDay();
+    
+        console.log('status', txCountByDay);
+        let parseTxCountByDay = () =>{
+            let times = txCountByDay.map(({time})=>{
+                return moment(time).format('MM-DD');
+            });
+            let counts = txCountByDay.map(({count})=>{
+                return count;
+            })
+            this.setState({
+                txCountByDayChartOptions:{
+                    ...this.state.txCountByDayChartOptions,
+                    xaxis: {
+                        ...this.state.txCountByDayChartOptions.xaxis,
+                        categories: times,
+                    }, 
+                },
+                txCountByDayChartSeries: [
+                    {
+                        ...this.state.txCountByDayChartSeries[0],
+                        data: counts,
+                    }
+                ]
+            });
+            console.log(times);
+        }
+        parseTxCountByDay();
+
     }
     render() {
         const difficultyCardText = (num)=>{
@@ -324,8 +355,8 @@ class Home extends React.Component {
                                     type="area"
                                     className={'chart-lg'}
                                     height="280px"
-                                    options={this.state.options}
-                                    series={this.state.series}
+                                    options={this.state.txCountByDayChartOptions}
+                                    series={this.state.txCountByDayChartSeries}
                                 />
                             </div>
                         </div>
@@ -344,12 +375,10 @@ class Home extends React.Component {
                                     </a>
                                 </span>
                             </div>
-                            <div className="table-responsive">
+                            <div className="card-table table-responsive">
                                 <Table columns={[
                                     {
                                         field: 'height', name: intl.get('HOME_LATEST_BLOCKS_HEIGHT'),
-                                        tdStyle: { width: '60px', ...this.state.globalTdStyle},
-                                        thStyle: {},
                                         render: (item) => {
                                             return (
                                                 <a href={`/blocks/${item.hash}`}>
@@ -360,13 +389,12 @@ class Home extends React.Component {
                                     },
                                     {
                                         field: 'timestamp', name: intl.get('HOME_LATEST_BLOCKS_TIME'),
-                                        tdStyle: { width: '180px', ...this.state.globalTdStyle },
                                         render: (item) => {
                                             let t = parseInt(item.timestamp);
                                             let datetime = new Date(t * 1000);
                                             const timestr = timeformat(datetime);
                                             return (
-                                                <span className="fs-6">
+                                                <span>
                                                     {timestr}
                                                 </span>
                                             );
@@ -374,7 +402,7 @@ class Home extends React.Component {
                                     },
                                     {
                                         field: 'coinbase', name: intl.get('HOME_LATEST_BLOCKS_MINER'),
-                                        tdStyle: { maxWidth: '150px', ...this.state.globalTdStyle},
+                                        tdStyle: { maxWidth: '180px'},
                                         render: (item) => {
                                             return (
                                                 <div className="text-truncate">
@@ -386,20 +414,16 @@ class Home extends React.Component {
                                         }
                                     },
                                     { field: 'txCount', name: intl.get('HOME_LATEST_BLOCKS_TXS'), 
-                                    // thStyle: {textAlign: 'right'},
-                                    // tdStyle: {textAlign: 'right', ...this.state.globalTdStyle }, 
-                                    thStyle: {},
-                                    tdStyle: {...this.state.globalTdStyle }, 
                                     render: (item) => {
                                         return (
-                                            <span>
+                                            <div>
                                                 {defaultIntNumberFormat(item.txCount)}
-                                            </span>
+                                            </div>
                                         );
                                     }},
                                     { field: 'reward', name: intl.get('HOME_LATEST_BLOCKS_REWARD'), 
                                     thStyle: {textAlign: 'right'},
-                                    tdStyle: { textAlign: 'right', ...this.state.globalTdStyle  },
+                                    tdStyle: { textAlign: 'right'},
                                     render: (item) => {
                                         const rewards = atto2base(item.rewards);
                                         return (
@@ -427,15 +451,14 @@ class Home extends React.Component {
                                     </a>
                                 </span>
                             </div>
-                            <div className="table-responsive">
+                            <div className="card-table table-responsive">
                                 <Table columns={[
                                     {
                                         field: 'hash', name: intl.get('HOME_LATEST_TRANSACTIONS_HASH'),
-                                        tdStyle: { maxWidth: '240px',...this.state.globalTdStyle },
+                                        tdStyle: { maxWidth: '180px',},
                                         render: (item) => {
                                             return (
                                                 <div className="text-truncate">
-
                                                     <a href={`/txs/${item.hash}`}>
                                                         {item.hash}
                                                     </a>
@@ -445,7 +468,6 @@ class Home extends React.Component {
                                     },
                                     {
                                         name: intl.get('HOME_LATEST_TRANSACTIONS_ADDRESS'),
-                                        tdStyle: { ...this.state.globalTdStyle },
                                         render: (item) => {
                                             let fromAddr = splitAndEllipsisAddress(item.from);
                                             let toAddress = splitAndEllipsisAddress(item.to);
@@ -464,7 +486,7 @@ class Home extends React.Component {
                                     {
                                         field: 'value', name: intl.get('HOME_LATEST_TRANSACTIONS_VALUE'), 
                                         thStyle: {textAlign: 'right'},
-                                        tdStyle: {...this.state.globalTdStyle, textAlign: 'right'},
+                                        tdStyle: {textAlign: 'right'},
                                         render: (item) => {
                                             let value = atto2base(item.value);
                                             return (
