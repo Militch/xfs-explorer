@@ -9,6 +9,7 @@ import {
   Switch,
   Route,
   useLocation,
+  useHistory,
 } from "react-router-dom";
 
 // import 'bootstrap/dist/css/bootstrap.css';
@@ -23,9 +24,13 @@ import TxDetail from './TxDetail';
 import AccountDetail from './AccountDetail';
 import Tokens from './Tokens';
 import TokenDetail from './TokenDetail';
+import NFTsPage from './NFTsPage';
 import classNames from 'classnames';
 import ErrorPage from './404';
-
+import BlankPage from './BlankPage';
+import services from './services';
+import { BrowserRouter } from 'react-router-dom';
+const api = services.api;
 function NavItem({ href, children, ...props }) {
   let location = useLocation();
   let { pathname } = location;
@@ -51,11 +56,11 @@ function NavItem({ href, children, ...props }) {
 const SUPPOER_LOCALES = [
   {
     name: 'English',
-    value: 'en-US'
+    value: 'en-us'
   },
   {
     name: '简体中文',
-    value: 'zh-CN'
+    value: 'zh-cn'
   }
 ];
 const SUPPOER_NETWORKS = [
@@ -69,10 +74,71 @@ const SUPPOER_NETWORKS = [
   },
 ];
 const DEFAULT_NETWORK = '1';
+const DEFAULT_LOCALES = 'en-us';
 const MAINNET_DISABLE = true;
 function getUrlParams(key) {
   const params = new URLSearchParams(window.location.search);
   return params.get(key);
+}
+function SearchBar({children,value}) {
+  const history = useHistory();
+  const location = useLocation();
+  console.log('bar',history, location);
+  let handleSearchSubmit = async (e)=>{
+    e.preventDefault();
+    // console.log('search', this.state.searchq);
+    try {
+      let searchr = await api.requestSearch({
+        params: {
+          q: value,
+        }
+      });
+
+      const { type, pathValue } = searchr;
+      if (type === 1){
+        // history.push(`/blocks/${value}`);
+        history.replace(`/loading`, {
+          to: `/blocks/${value}`
+        });
+        // window.location.reload();
+        return;
+      }else if(type === 2){
+        // history.push(`/txs/${value}`);
+        history.replace(`/loading`, {
+          to: `/txs/${value}`
+        });
+        return;
+      }else if(type === 3){
+        // history.push(`/accounts/${value}`);
+        history.replace(`/loading`, {
+          to: `/accounts/${value}`
+        });
+        return;
+      }else if(type === 4){
+        // history.push(`/blocks/${pathValue}`);
+        history.replace(`/loading`, {
+          to: `/blocks/${pathValue}`
+        });
+        return;
+      }
+      alert('Not found data');
+    } catch (e) {
+      alert('aaa');
+    }
+  }
+
+  return (
+    <form onSubmit={(e) => { handleSearchSubmit(e) }}>
+      <div className="input-icon">
+        <span className="input-icon-addon">
+          {/* Download SVG icon from http://tabler-icons.io/i/search */}
+          <svg xmlns="http://www.w3.org/2000/svg" className="icon" width={24} height={24} viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><circle cx={10} cy={10} r={7} /><line x1={21} y1={21} x2={15} y2={15} /></svg>
+        </span>
+        { children }
+        
+      </div>
+    </form>
+  );
 }
 class App extends React.Component {
   constructor(props) {
@@ -81,6 +147,7 @@ class App extends React.Component {
       pathname: '/',
       showMNav: false,
       initDone: false,
+      searchq: ''
     };
   }
   componentDidMount() {
@@ -90,8 +157,8 @@ class App extends React.Component {
   loadLocales() {
     let currentLocaleObj = this.getCurrentLocale();
     let currentLocale = currentLocaleObj.value;
-    axios.get(`locales/${currentLocale}.json`).then((res) => {
-      console.log('local-res', res);
+    axios.get(`/locales/${currentLocale}.json`).then((res) => {
+      // console.log('local-res', res);
       return intl.init({
         currentLocale,
         locales: {
@@ -115,7 +182,8 @@ class App extends React.Component {
       urlLocaleKey: 'lang',
       cookieLocaleKey: 'lang'
     });
-    return _.find(SUPPOER_LOCALES, { value: currentLocale });
+    currentLocale = currentLocale || DEFAULT_LOCALES;
+    return _.find(SUPPOER_LOCALES, { value: currentLocale.toLowerCase() });
   }
   onChangeLocal({ locale }) {
     window.sessionStorage.setItem('_lang', locale);
@@ -166,9 +234,9 @@ class App extends React.Component {
                     )
                     return (
                       <div className={dropDownItemClasses}
-                      style={{
-                        cursor: 'pointer'
-                      }}
+                        style={{
+                          cursor: 'pointer'
+                        }}
                         key={net.id}
                         onClick={(e) => { this.onChangeNetwork({ e, netid: net.id }) }}>
                         {intl.get(`NAV_NETWORK_${net.value}`)}
@@ -197,9 +265,9 @@ class App extends React.Component {
                     )
                     return (
                       <div className={dropDownItemClasses}
-                      style={{
-                        cursor: 'pointer'
-                      }}
+                        style={{
+                          cursor: 'pointer'
+                        }}
                         key={locale.value}
                         onClick={(e) => { this.onChangeLocal({ e, locale: locale.value }) }}>
                         {locale.name}
@@ -235,16 +303,15 @@ class App extends React.Component {
                     {intl.get('NAV_NFTS')}
                   </NavItem>
                 </ul>
-                <div className="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-                  <form action="." method="get">
-                    <div className="input-icon">
-                      <span className="input-icon-addon">
-                        {/* Download SVG icon from http://tabler-icons.io/i/search */}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="icon" width={24} height={24} viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><circle cx={10} cy={10} r={7} /><line x1={21} y1={21} x2={15} y2={15} /></svg>
-                      </span>
-                      <input type="text" className="form-control" placeholder="Search…" aria-label="Search in website" />
-                    </div>
-                  </form>
+                <div className="my-2 my-md-0 flex-grow-1 home-md-searchbar order-first order-md-last">
+                  <SearchBar value={this.state.searchq}>
+                  <input type="text" className="form-control"
+                        value={this.state.searchq}
+                        onChange={(e) => {
+                          this.setState({ searchq: e.target.value });
+                        }}
+                        placeholder={intl.get('PLACEHOLDER_SEARCH_BAR')} />
+                  </SearchBar>
                 </div>
               </div>
             </div>
@@ -254,54 +321,53 @@ class App extends React.Component {
           marginTop: '2.25rem',
         }}>
           <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route exact path="/blocks" component={Blocks}/>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/blocks" component={Blocks} />
             <Route exact path="/accounts" component={Accounts} />
-            <Route exact path="/txs" component={Transactions}/>
-            {/* <Route path="/d" component={TxDetail}/> */}
-            
-            <Route path="/tokens" component={Tokens}/>
-
-            
-            <Route exact path="/a" component={BlockDetail}/>
-            <Route path="/b" component={TxDetail}/>
-            <Route path="/c" component={AccountDetail}/>
-            <Route path="/d" component={TokenDetail}/>
-            <Route path="/404" component={ErrorPage}/>
+            <Route exact path="/txs" component={Transactions} />
+            <Route exact path="/tokens" component={Tokens} />
+            <Route exact path="/nfts" component={NFTsPage} />
+            <Route exact path="/blocks/:hash" component={BlockDetail} />
+            <Route exact path="/txs/:hash" component={TxDetail} />
+            <Route exact path="/accounts/:address" component={AccountDetail} />
+            {/* <Route exact path="/tokens/:address" component={TokenDetail}/> */}
+            {/* <Route exact path="/nfts/:address" component={TokenDetail}/> */}
+            <Route exact path="/404" component={ErrorPage} />
+            <Route exact path="/loading" component={BlankPage} />
           </Switch>
         </main>
         <div className="container">
           <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <p className="col-md-4 mb-0 text-muted">© 2021 Starx Labs, Inc</p>
+            <p className="col-md-4 mb-0 text-muted">Copyright &copy; 2021 Starx Labs, Inc</p>
             <ul className="nav col-md-4 justify-content-end">
               <li className="nav-item">
                 <a href="/" className="nav-link px-2 text-muted">
-                {intl.get('NAV_HOME')}
+                  {intl.get('NAV_HOME')}
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/" className="nav-link px-2 text-muted">
-                {intl.get('NAV_BLOCKS')}
+                <a href="/blocks" className="nav-link px-2 text-muted">
+                  {intl.get('NAV_BLOCKS')}
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/" className="nav-link px-2 text-muted">
-                {intl.get('NAV_TXS')}
+                <a href="/txs" className="nav-link px-2 text-muted">
+                  {intl.get('NAV_TXS')}
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/" className="nav-link px-2 text-muted">
-                {intl.get('NAV_ACCOUNTS')}
+                <a href="/accounts" className="nav-link px-2 text-muted">
+                  {intl.get('NAV_ACCOUNTS')}
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/" className="nav-link px-2 text-muted">
-                {intl.get('NAV_TOKENS')}
+                <a href="/tokens" className="nav-link px-2 text-muted">
+                  {intl.get('NAV_TOKENS')}
                 </a>
               </li>
               <li className="nav-item">
-                <a href="/" className="nav-link px-2 text-muted">
-                {intl.get('NAV_NFTS')}
+                <a href="/nfts" className="nav-link px-2 text-muted">
+                  {intl.get('NAV_NFTS')}
                 </a>
               </li>
             </ul>

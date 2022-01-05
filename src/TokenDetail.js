@@ -152,7 +152,7 @@ class TokenDetail extends React.Component {
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href={`/address/${item.from}`}>
+                                            <a href={`/accounts/${item.from}`}>
                                                 {item.from}
                                             </a>
                                         </div>
@@ -166,7 +166,7 @@ class TokenDetail extends React.Component {
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href={`/address/${item.to}`}>
+                                            <a href={`/accounts/${item.to}`}>
                                                 {item.to}
                                             </a>
                                         </div>

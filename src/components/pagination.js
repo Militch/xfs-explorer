@@ -16,13 +16,15 @@ function PageItem(props) {
 
 export default function Pageination(props) {
     let { current, pageSize, total, pathname } = props;
-    let { firstLableText, pageLableText, lastLableText } = props;
-    console.log('fir', firstLableText);
+    let { firstLableText, pageLableText, lastLableText, hintRender } = props;
     current = parseInt(current);
     pageSize = parseInt(pageSize);
     total = parseInt(total);
-    let start = (current * pageSize) -  (pageSize - 1);
+    let start = (current * pageSize) - (pageSize - 1);
     let end = start + pageSize - 1;
+    if (end > total){
+        end = total;
+    }
     let maxpage = ()=>{
         let pn = parseInt(total / pageSize);
         let mod = total % pageSize;
@@ -43,13 +45,19 @@ export default function Pageination(props) {
     const lastPageDisabled = ()=>{
         return current >= maxpage();
     };
-    return (
-        <div className="d-flex align-items-center">
+    let defaultHintRender = ({start, end, total}) =>{
+        return (
             <p className="m-0 text-muted">
                 Showing
                 <span> {start} </span> to <span> {end} </span> of
                 <span> {total} </span> entries
             </p>
+        );
+    }
+    hintRender = hintRender || defaultHintRender;
+    return (
+        <div className="d-flex align-items-center">
+            {hintRender({start, end, total})}
             <ul className="pagination m-0 ms-auto">
                 <PageItem href={`${pathname}?p=1`} 
                 disabled={firstDisabled()}>

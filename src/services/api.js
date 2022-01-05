@@ -87,3 +87,59 @@ export function getTransactionByHash(hash,options){
         });
     });
 }
+
+export function getAccountsByPage(options){
+    return new Promise((resolve, reject)=>{
+        apiCli.request({
+            url: '/accounts',
+            method: 'GET',
+            ...(options||{})
+        }).then(res=>{
+            resolve(res.data);
+        }).catch(err=>{
+            reject(err.data);
+        });
+    });
+}
+
+export function getAccountByAddress(address,options){
+    return new Promise((resolve, reject)=>{
+        apiCli.request({
+            url: `/accounts/${address}`,
+            method: 'GET',
+            ...(options||{})
+        }).then(res=>{
+            resolve(res.data);
+        }).catch(err=>{
+            reject(err.data);
+        });
+    });
+}
+
+export function getTransactionsByAddress(address, options){
+    return new Promise((resolve, reject)=>{
+        apiCli.request({
+            url: `/accounts/${address}/txs`,
+            method: 'GET',
+            ...(options||{})
+        }).then(res=>{
+            resolve(res.data);
+        }).catch(err=>{
+            reject(err.data);
+        });
+    });
+}
+
+export function requestSearch(options){
+    return new Promise((resolve, reject)=>{
+        apiCli.request({
+            url: `/search`,
+            method: 'GET',
+            ...(options||{})
+        }).then(res=>{
+            resolve(res.data);
+        }).catch(err=>{
+            reject(err.data);
+        });
+    });
+}

@@ -3,20 +3,11 @@ import { Table } from './components';
 import intl from 'react-intl-universal';
 import services from './services';
 import { nowtimeformat, timeformat } from './util';
+import { defaultIntNumberFormat,defaultrNumberFormatFF2,defaultrNumberFormatFF4,hashesUnitCover } from './util/common';
 import { atto2base } from './util/xfslibutil';
 import Chart from "react-apexcharts";
 const api = services.api;
 
-function CoinNumberRender(props) {
-    const { value } = props;
-    console.log(props);
-    let number = atto2base(value);
-    return (
-        <span>
-            {number} FIX
-        </span>
-    );
-}
 
 function splitAndEllipsisAddress(address, len=5){
     let start = address.substring(0, len);
@@ -28,14 +19,15 @@ class Home extends React.Component {
         super(props);
         this.state = {
             status: {
-                latestHeight: '251,321',
-                blockReward: '17.00',
-                difficulty: '1,321',
-                transactions: '1,251,321',
-                hashRate: '231',
-                accounts: '1,321',
-                blocks: '15,456',
-                blockTime: '3',
+                latestHeight: 0,
+                transactions: 0,
+                difficulty: 0,
+                power: 0,
+                accounts: 0,
+                blockTime: 0,
+                blockRewards: 0,
+                txsInBlock: 0,
+                tps: 0
             },
             globalTdStyle: {
                 fontSize:'1rem', 
@@ -95,157 +87,89 @@ class Home extends React.Component {
                 }
             ],
             latestBlocks: [
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 4,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: '12',
-                },
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 3,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: '12',
-                },
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 2,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: '12',
-                },
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 1,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: '12.12021',
-                },
+                // {
+                //     id: 12112,
+                //     hash: "0x00000062be70b7bf0319404c8ddfb0abd0c741a29b4bb98a2f92796e48580966",
+                //     height: 12111,
+                //     version: 0,
+                //     hashPrevBlock: "0x000000dca98d022526682c1165f001c12f71a335240ffe28a147dbc21c5e984a",
+                //     timestamp: 1639535358,
+                //     coinbase: "ig3Zb1paNi1iTob5k3853cDPVSBaCuLZU",
+                //     stateRoot: "0x8da47c1f919bc94af56a9421c2681dfeb902edd6841180a7040f4ffce83fa475",
+                //     transactionsRoot: "0x3cb1db3623d0a999e92f82b930ff1520406d17de11621818fe728fb5f7e9d8ad",
+                //     receiptsRoot: "0x89642220dc068df76533ed40678dba141fbdf1ca1626bf87eef43bf5c54b9a35",
+                //     gasLimit: 2500000,
+                //     gasUsed: 250000,
+                //     bits: 4278190109,
+                //     nonce: 46300,
+                //     extraNonce: "12603133301523114000",
+                //     txCount: 10,
+                //     rewards: "0"
+                // },
             ],
             latestTxs: [
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",
-                    version: 0,
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",
-                    version: 0,
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",
-                    version: 0,
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",
-                    version: 0,
-                },
+                // {
+                //     id: 10571,
+                //     blockHash: "0x000000a797900f9a7a6bd6185bd111c47b23f649811c4e383b83d5619d861f09",
+                //     blockHeight: 17082,
+                //     blockTime: 1639652840,
+                //     version: 0,
+                //     from: "f3A6FZfuesZ98dFmduCR7YLffmkqnjgnA",
+                //     to: "fKg8tMyp4uvMFiJ9J71Xxn5G5dbLbse4Q",
+                //     gasPrice: "10000000000",
+                //     gasLimit: "25000",
+                //     gasUsed: "25000",
+                //     gasFee: "250000000000000",
+                //     data: null,
+                //     nonce: 858,
+                //     value: "410000000000000000",
+                //     signature: null,
+                //     hash: "0x463ff654b54bbb815e8e70dbae28d061e5348b53cabdf94a5f7d3e55c5d17136",
+                //     status: 1,
+                //     type: 0
+                // },
+                
             ],
         }
     }
     async componentDidMount() {
-        // let st = await api.getStatus();
-        // console.log('status', st);
-        // let latest = await api.getLatest();
-        // const { blocks, txs } = latest;
-        // this.setState({ latestBlocks: blocks, latestTxs: txs });
-        // a := new ApexCharts(document.getElementById('chart-demo-line'));
-        // console.log('latest', latest);
+        let status = await api.getStatus();
+        console.log('status', status);
+        let latest = await api.getLatest();
+        const { blocks, txs } = latest;
+        this.setState({status: status, latestBlocks: blocks, latestTxs: txs});
     }
     render() {
+        const difficultyCardText = (num)=>{
+            const du = hashesUnitCover(num);
+            return (
+                <p className="card-text" style={{
+                    fontSize: '26px',
+                    fontWeight: 400,
+                }}>
+                    {defaultrNumberFormatFF2(du.num)}
+                    <span style={{
+                        fontSize: '18px',
+                    }}> {du.unit}</span>
+                </p>
+            );
+        }
+
+        const powerCardText = (num)=>{
+            const du = hashesUnitCover(num);
+            return (
+                <p className="card-text" style={{
+                    fontSize: '26px',
+                    fontWeight: 400,
+                }}>
+                    {defaultrNumberFormatFF2(du.num)}
+                    <span style={{
+                        fontSize: '18px',
+                    }}> {du.unit} / S</span>
+                </p>
+            );
+        }
+        const blocksAvgRewards = atto2base(this.state.status.blockRewards);
         return (
             <div>
                 <div className="row mb-4">
@@ -261,7 +185,8 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
-                                            {this.state.status.latestHeight}
+                                            {defaultIntNumberFormat(this.state.status.latestHeight)}
+                                            {/* {this.state.status.latestHeight} */}
                                         </p>
                                     </div>
                                 </div>
@@ -276,7 +201,7 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
-                                            {this.state.status.transactions}
+                                            {defaultIntNumberFormat(this.state.status.transactions)}
                                         </p>
                                     </div>
                                 </div>
@@ -287,15 +212,7 @@ class Home extends React.Component {
                                         <h5 className="card-title">
                                         {intl.get('HOME_STATE_DIFFICULTY')}
                                         </h5>
-                                        <p className="card-text" style={{
-                                            fontSize: '26px',
-                                            fontWeight: 400,
-                                        }}>
-                                            {this.state.status.difficulty}
-                                            <span style={{
-                                                fontSize: '18px',
-                                            }}> T</span>
-                                        </p>
+                                        {difficultyCardText(this.state.status.difficulty)}
                                     </div>
                                 </div>
                             </div>
@@ -305,16 +222,7 @@ class Home extends React.Component {
                                         <h5 className="card-title">
                                         {intl.get('HOME_STATE_POWER')}
                                         </h5>
-                                        <p className="card-text" style={{
-                                            fontSize: '26px',
-                                            fontWeight: 400,
-                                        }}>
-                                            {this.state.status.hashRate}
-                                            <span style={{
-                                                fontSize: '18px',
-                                            }}> T / S</span>
-
-                                        </p>
+                                        {powerCardText(this.state.status.power)}
                                     </div>
                                 </div>
                             </div>
@@ -328,7 +236,7 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
-                                            {this.state.status.accounts}
+                                            {defaultIntNumberFormat(this.state.status.accounts)}
                                         </p>
                                     </div>
                                 </div>
@@ -343,7 +251,7 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
-                                            {this.state.status.blockTime}
+                                            {defaultIntNumberFormat(this.state.status.blockTime)}
                                             <span style={{
                                                 fontSize: '18px',
                                             }}> Sec</span>
@@ -361,7 +269,7 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
-                                            {this.state.status.blockReward}
+                                            {defaultrNumberFormatFF2(blocksAvgRewards)}
                                             <span style={{
                                                 fontSize: '18px',
                                             }}> XFSC</span>
@@ -379,7 +287,7 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
-                                            {this.state.status.blocks}
+                                            {defaultIntNumberFormat(this.state.status.txsInBlock)}
                                         </p>
                                     </div>
                                 </div>
@@ -394,7 +302,7 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
-                                            {this.state.status.blocks}
+                                            {defaultIntNumberFormat(this.state.status.tps)}
                                             <span style={{
                                                 fontSize: '18px',
                                             }}> TXS / S</span>
@@ -452,7 +360,7 @@ class Home extends React.Component {
                                     },
                                     {
                                         field: 'timestamp', name: intl.get('HOME_LATEST_BLOCKS_TIME'),
-                                        tdStyle: { width: '250px', ...this.state.globalTdStyle },
+                                        tdStyle: { width: '180px', ...this.state.globalTdStyle },
                                         render: (item) => {
                                             let t = parseInt(item.timestamp);
                                             let datetime = new Date(t * 1000);
@@ -466,11 +374,11 @@ class Home extends React.Component {
                                     },
                                     {
                                         field: 'coinbase', name: intl.get('HOME_LATEST_BLOCKS_MINER'),
-                                        tdStyle: { maxWidth: '120px', ...this.state.globalTdStyle},
+                                        tdStyle: { maxWidth: '150px', ...this.state.globalTdStyle},
                                         render: (item) => {
                                             return (
                                                 <div className="text-truncate">
-                                                    <a href={`/address/${item.coinbase}`}>
+                                                    <a href={`/accounts/${item.coinbase}`}>
                                                         {item.coinbase}
                                                     </a>
                                                 </div>
@@ -478,14 +386,25 @@ class Home extends React.Component {
                                         }
                                     },
                                     { field: 'txCount', name: intl.get('HOME_LATEST_BLOCKS_TXS'), 
-                                    tdStyle: { ...this.state.globalTdStyle }, },
+                                    // thStyle: {textAlign: 'right'},
+                                    // tdStyle: {textAlign: 'right', ...this.state.globalTdStyle }, 
+                                    thStyle: {},
+                                    tdStyle: {...this.state.globalTdStyle }, 
+                                    render: (item) => {
+                                        return (
+                                            <span>
+                                                {defaultIntNumberFormat(item.txCount)}
+                                            </span>
+                                        );
+                                    }},
                                     { field: 'reward', name: intl.get('HOME_LATEST_BLOCKS_REWARD'), 
                                     thStyle: {textAlign: 'right'},
                                     tdStyle: { textAlign: 'right', ...this.state.globalTdStyle  },
                                     render: (item) => {
+                                        const rewards = atto2base(item.rewards);
                                         return (
                                             <span>
-                                                {item.reward} 
+                                                {defaultrNumberFormatFF4(rewards)}
                                                 <span style={{
                                                 fontSize: '.8rem',
                                             }}> XFSC</span>
@@ -532,10 +451,10 @@ class Home extends React.Component {
                                             let toAddress = splitAndEllipsisAddress(item.to);
                                             return (
                                                 <span>
-                                                    <a href={`/txs/${item.hash}`}>
+                                                    <a href={`/accounts/${item.from}`}>
                                                             {fromAddr}
                                                         </a>&nbsp;&raquo;&nbsp;
-                                                        <a href={`/txs/${item.hash}`}>
+                                                        <a href={`/accounts/${item.to}`}>
                                                             {toAddress}
                                                         </a>
                                                 </span>
@@ -547,10 +466,10 @@ class Home extends React.Component {
                                         thStyle: {textAlign: 'right'},
                                         tdStyle: {...this.state.globalTdStyle, textAlign: 'right'},
                                         render: (item) => {
-                                            let number = atto2base(item.value);
+                                            let value = atto2base(item.value);
                                             return (
                                                 <span>
-                                                {number} 
+                                                {defaultrNumberFormatFF4(value)}
                                                 <span style={{
                                                 fontSize: '.8rem',
                                             }}> XFSC</span>

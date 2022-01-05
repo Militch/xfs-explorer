@@ -70,7 +70,7 @@ function nano2atto(val) {
     }
     whole = new BN(whole);
     fraction = new BN(fraction);
-    let base = new BN(10).pow(new BN(ATTO_BASE_LEN));
+    let base = new BN(10).pow(new BN(ATTO_NANO_LEN));
     let atto = (whole.mul(base)).add(fraction);
     return atto.toString(10);
 }

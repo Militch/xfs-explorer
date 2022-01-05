@@ -35,7 +35,6 @@ export default function Table(props) {
     let { emptyText} = props;
     columns = columns || [];
     data = data || [];
-    console.log('table-c', columns);
     const plview = ({ emptyRender }) => {
         const defaultView = () => {
             return (

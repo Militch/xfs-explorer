@@ -1,3 +1,5 @@
+
+import moment from "moment";
 function nowtimeformat(last=0, current=(new Date())) {
     let now = parseInt(current.getTime() / 1000)
     let diff = now - last;
@@ -25,7 +27,7 @@ function nowtimeformat(last=0, current=(new Date())) {
 
 
 function timeformat(current=(new Date())) {
-    return current.toISOString();
+    return moment(current).format('YYYY-MM-DD HH:mm:ss');
 }
 
 export {

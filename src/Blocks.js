@@ -8,6 +8,8 @@ import { Table,Pagination } from './components';
 import { timeformat } from './util';
 import intl from 'react-intl-universal';
 import services from './services';
+import { atto2base } from './util/xfslibutil';
+import { defaultIntNumberFormat,defaultrNumberFormatFF2,defaultrNumberFormatFF4,hashesUnitCover } from './util/common';
 const api = services.api;
 function PaginationWapper(props) {
     let location = useLocation();
@@ -42,78 +44,25 @@ class Blocks extends React.Component {
                 paddingBottom: '1rem'  
             },
             data: [
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 4,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: 1000,
-                },
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 4,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: 1000,
-                },
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 4,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: 1000,
-                },
-                {
-                    bits: 4278190109,
-                    coinbase: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasLimit: "2500",
-                    gasUsed: "2500",
-                    hash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    hashPrevBlock: "0x00000068525708d49904196f76c43bc68b7e89ccea6a3fe70d7d7c1d60030460",
-                    height: 4,
-                    id: 5,
-                    nonce: 12775115,
-                    receiptsRoot: "0x622219c2714e14f0952131f181ca502788c294e65726f8674fc86118df918a4d",
-                    stateRoot: "0x6276a8d1a3f0d30f3da1a54a61220e9ded316736390e4c58452fbdfc0f7fce8e",
-                    timestamp: 1635806005,
-                    transactionsRoot: "0xeba6126797231f4dd2fe666c1e8bd3e7ed4e32d2ee4d79da5ee1fb07a4a5f2f8",
-                    txCount: 1,
-                    version: 0,
-                    reward: 1000,
-                },
+                // {
+                //     id: 12112,
+                //     hash: "0x00000062be70b7bf0319404c8ddfb0abd0c741a29b4bb98a2f92796e48580966",
+                //     height: 12111,
+                //     version: 0,
+                //     hashPrevBlock: "0x000000dca98d022526682c1165f001c12f71a335240ffe28a147dbc21c5e984a",
+                //     timestamp: 1639535358,
+                //     coinbase: "ig3Zb1paNi1iTob5k3853cDPVSBaCuLZU",
+                //     stateRoot: "0x8da47c1f919bc94af56a9421c2681dfeb902edd6841180a7040f4ffce83fa475",
+                //     transactionsRoot: "0x3cb1db3623d0a999e92f82b930ff1520406d17de11621818fe728fb5f7e9d8ad",
+                //     receiptsRoot: "0x89642220dc068df76533ed40678dba141fbdf1ca1626bf87eef43bf5c54b9a35",
+                //     gasLimit: 2500000,
+                //     gasUsed: 250000,
+                //     bits: 4278190109,
+                //     nonce: 46300,
+                //     extraNonce: "12603133301523114000",
+                //     txCount: 10,
+                //     rewards: "0"
+                // },
             ],
         }
     }
@@ -122,28 +71,28 @@ class Blocks extends React.Component {
         const {search} = location;
         const sq = qs.parse(search.replace(/^\?/,''));
         let pageNum = sq['p'];
-        if (!pageNum) {
-            pageNum = 1;
+        pageNum = parseInt(pageNum||1);
+        try{
+            let pagedata = await api.getBlocksByPage({params: {
+                p: pageNum,
+            }});
+            let {total,records} = pagedata;
+            let pageSize = this.state.page.pageSize;
+            let pn = parseInt(total / pageSize);
+            let mod = total % pageSize;
+            if (mod > 0) {
+                pn += 1;
+            }
+            if (pageNum > pn){
+                throw new Error('pagenum overflow');
+            }
+            this.setState({page: {total: total, 
+                pageSize: pageSize}, 
+                data: records});
+        }catch(e) {
+            console.log(e);
+            history.replace('/404');
         }
-        pageNum = parseInt(pageNum);
-        let pagedata = await api.getBlocksByPage({params: {
-            p: pageNum,
-        }});
-        let {total,records} = pagedata;
-        
-        let pageSize = this.state.page.pageSize;
-        let pn = parseInt(total / pageSize);
-        let mod = total % pageSize;
-        if (mod > 0) {
-            pn += 1;
-        }
-        if (pageNum > pn){
-            // history.replace('/404');
-            return;
-        }
-        this.setState({page: {total: total, 
-            pageSize: pageSize}, 
-            data: records});
     }
     render() {
         return (
@@ -156,7 +105,7 @@ class Blocks extends React.Component {
                         <Table columns={[
                             {
                                 field: 'height', name: intl.get('BLOCKS_HEIGHT'), 
-                                tdStyle:{ width: '6%', ...this.state.globalTdStyle },
+                                tdStyle:{ width: '100px', ...this.state.globalTdStyle },
                                 render: (item) => {
                                     return (
                                         <a href={`/blocks/${item.hash}`}>
@@ -167,7 +116,7 @@ class Blocks extends React.Component {
                             },
                             {
                                 field: 'hash', name: intl.get('BLOCKS_HASH'), 
-                                tdStyle:{ maxWidth: '128px', ...this.state.globalTdStyle  },
+                                tdStyle:{ maxWidth: '180px', ...this.state.globalTdStyle  },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -180,7 +129,7 @@ class Blocks extends React.Component {
                             },
                             {
                                 field: 'timestamp', name: intl.get('BLOCKS_TIME'),
-                                tdStyle:{ width: '230px', ...this.state.globalTdStyle  },
+                                tdStyle:{ width: '180px', ...this.state.globalTdStyle  },
                                 render: (item) => {
                                     let time = parseInt(item.timestamp);
                                     const timestr = timeformat(new Date(time * 1000));
@@ -193,11 +142,11 @@ class Blocks extends React.Component {
                             },
                             {
                                 field: 'coinbase', name: intl.get('BLOCKS_MINER'),
-                                tdStyle:{ maxWidth: '120px', ...this.state.globalTdStyle  },
+                                tdStyle:{ maxWidth: '180px', ...this.state.globalTdStyle  },
                                  render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href={`/address/${item.coinbase}`}>
+                                            <a href={`/accounts/${item.coinbase}`}>
                                                 {item.coinbase}
                                             </a>
                                         </div>
@@ -206,14 +155,22 @@ class Blocks extends React.Component {
                             },
                             { field: 'txCount', name: intl.get('BLOCKS_TXS'), 
                             thStyle: {textAlign: 'right'},
-                            tdStyle: {...this.state.globalTdStyle, textAlign: 'right' } },
+                            tdStyle: {...this.state.globalTdStyle, textAlign: 'right' },
+                            render: (item)=>{
+                                return (
+                                    <span>
+                                        {defaultIntNumberFormat(item.txCount)}
+                                    </span>
+                                );
+                            },
+                         },
                             { field: 'gasUsed', name: intl.get('BLOCKS_GAS_USED'),
                             thStyle: {textAlign: 'right'},
                             tdStyle: {...this.state.globalTdStyle, textAlign: 'right' },
                               render: (item)=>{
                                   return (
                                       <span>
-                                          {item.gasUsed}
+                                          {defaultIntNumberFormat(item.gasUsed)}
                                       </span>
                                   );
                               }},
@@ -223,17 +180,19 @@ class Blocks extends React.Component {
                             render: (item)=>{
                                 return (
                                     <span>
-                                        {item.gasLimit}
+                                        {defaultIntNumberFormat(item.gasLimit)}
                                     </span>
                                 );
                             }},
-                            { field: 'reward', name: intl.get('BLOCKS_REWARD'), 
+                            { field: 'rewards', name: intl.get('BLOCKS_REWARD'), 
                                     thStyle: {textAlign: 'right'},
                                     tdStyle: { textAlign: 'right', ...this.state.globalTdStyle  },
                                     render: (item) => {
+                                        
+                                        let value = atto2base(item.rewards);
                                         return (
                                             <span>
-                                                {item.reward} 
+                                                {defaultrNumberFormatFF4(value)}
                                                 <span style={{
                                                 fontSize: '.8rem',
                                             }}> XFSC</span>
@@ -241,7 +200,6 @@ class Blocks extends React.Component {
                                         );
                                     }
                             },
-                            // { field: 'reward', name: 'Reward' },
                         ]} data={this.state.data} click={() => { }} >
                         </Table>
                     </div>

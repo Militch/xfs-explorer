@@ -7,10 +7,9 @@ import {
 import { Table,Pagination } from './components';
 import { timeformat } from './util';
 import intl from 'react-intl-universal';
-import page_placeholder from "./images/page_placeholder.svg";
 import services from './services';
+import page_placeholder from "./images/page_placeholder.svg";
 const api = services.api;
-
 function PaginationWapper(props) {
     let location = useLocation();
     const {total, pageSize} = props;
@@ -27,7 +26,7 @@ function PaginationWapper(props) {
     );
   }
   
-class Tokens extends React.Component {
+class NFTsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -218,4 +217,4 @@ class Tokens extends React.Component {
         );
     }
 }
-export default Tokens;
+export default NFTsPage;

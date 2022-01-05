@@ -9,10 +9,11 @@ import { Table, Pagination } from './components';
 import { timeformat } from './util';
 import services from './services';
 import { atto2base } from './util/xfslibutil';
+import { defaultrNumberFormatFF4, defaultrNumberFormatFF6 } from './util/common';
 const api = services.api;
 function PaginationWapper(props) {
     let location = useLocation();
-    const { total, pageSize } = props;
+    const { total, pageSize, } = props;
     const { search } = location;
     const sq = qs.parse(search.replace(/^\?/, ''));
     let pageNum = sq['p'];
@@ -21,8 +22,11 @@ function PaginationWapper(props) {
     }
     return (
         <Pagination current={pageNum}
-        pathname='/txs'
-         pageSize={pageSize} total={total} />
+            firstLableText={intl.get('PAGE_TABLE_PAGINATION_FIRST')}
+            pageLableText={intl.get('PAGE_TABLE_PAGINATION_PAGE')}
+            lastLableText={intl.get('PAGE_TABLE_PAGINATION_LAST')}
+            pathname='/txs'
+            pageSize={pageSize} total={total} />
     );
 }
 class Transactions extends React.Component {
@@ -30,141 +34,73 @@ class Transactions extends React.Component {
         super(props);
         this.state = {
             globalTdStyle: {
-                fontSize:'1rem', 
+                fontSize: '1rem',
                 paddingTop: '1rem',
-                paddingBottom: '1rem'  
+                paddingBottom: '1rem'
             },
             data: [
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasFee: "250000",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",             
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasFee: "250000",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",             
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasFee: "250000",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",             
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasFee: "250000",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",             
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasFee: "250000",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",             
-                },
-                {
-                    blockHash: "0x0000006dcf1e68df26e04159e17bfc44a2ea1306f35a118ec7d3ca33e1ab939f",
-                    blockHeight: 4,
-                    data: null,
-                    from: "kr2pG9kgFwtuXC549VewdnJrf1dR3ffd5",
-                    gasFee: "250000",
-                    gasLimit: "2500",
-                    gasPrice: "100",
-                    hash: "0x3471a4a4845ea276e5b97a2b2d8d589fa7be35e15538dd00b46e563631407630",
-                    id: 1,
-                    nonce: 0,
-                    signature: "N5aUq+ExSGFuwsRD1u83UgrseeKrRSyBDO+w+asdmWwX8hUkpIibL0y8F4c91XZHuDjHOZ+Hdeel9WqzfLFuxQE=",
-                    timestamp: 1635805918,
-                    to: "nAxfgMYQacosjmGSn4xZmndWNoenCCNfn",
-                    value: "10000000000000000000",             
-                },
+                // {
+                //     id: 2811,
+                //     blockHash: "0x0000007c79ce45c41933ba345276925af085e6dbc5d07d97e96fac20cfb10629",
+                //     blockHeight: 12049,
+                //     blockTime: 1639534920,
+                //     version: 0,
+                //     from: "eSmZ8AVRpTjeMjRnXUZfe1S8bnxnr5svY",
+                //     to: "Ydx82FC7gh4PUzFACsn8f6TvGEQJJKghT",
+                //     gasPrice: "10000000000",
+                //     gasLimit: "25000",
+                //     gasUsed: "25000",
+                //     gasFee: "250000000000000",
+                //     data: null,
+                //     nonce: 2105,
+                //     value: "880000000000000000",
+                //     signature: null,
+                //     hash: "0x6f4a48933ecbf224f5cc582a126ac886556803743701bec810ef585e517f427b",
+                //     status: 1,
+                //     type: 0,
+                //     createTime: "2022-01-05 14:25:46",
+                //     updateTime: "2022-01-05 14:25:46"
+                // },
             ],
             page: {
                 pageSize: 20,
-                total: 1022
+                total: 0
             }
         }
     }
-    async componentDidMount(){
+    async componentDidMount() {
         const { history, location } = this.props;
-        const {search} = location;
-        const sq = qs.parse(search.replace(/^\?/,''));
+        const { search } = location;
+        const sq = qs.parse(search.replace(/^\?/, ''));
         let pageNum = sq['p'];
-        if (!pageNum) {
-            pageNum = 1;
+        pageNum = parseInt(pageNum || 1);
+        try {
+            let pagedata = await api.getTransactionsByPage({
+                params: {
+                    p: pageNum,
+                }
+            });
+            let { total, records } = pagedata;
+            let pageSize = this.state.page.pageSize;
+            let pn = parseInt(total / pageSize);
+            let mod = total % pageSize;
+            if (mod > 0) {
+                pn += 1;
+            }
+            if (pageNum > pn) {
+                throw new Error('pagenum overflow');
+            }
+            this.setState({
+                page: {
+                    total: total,
+                    pageSize: pageSize
+                },
+                data: records
+            });
+        } catch (e) {
+            console.log(e);
+            history.replace('/404');
         }
-        pageNum = parseInt(pageNum);
-        let pagedata = await api.getTransactionsByPage({params: {
-            p: pageNum,
-        }});
-        console.log('pagedata', pagedata);
-        const {total,records} = pagedata;
-        let pageSize = this.state.page.pageSize;
-        let pn = parseInt(total / pageSize);
-        let mod = total % pageSize;
-        if (mod > 0) {
-            pn += 1;
-        }
-        if (pageNum > pn){
-            // history.replace('/404');
-            return;
-        }
-        this.setState({page: {total: total, 
-            pageSize: pageSize}, 
-            data: records});
     }
     render() {
         return (
@@ -176,8 +112,19 @@ class Transactions extends React.Component {
                     <div className="table-responsive">
                         <Table columns={[
                             {
+                                name: intl.get('TXS_TIME'),
+                                tdStyle: { ...this.state.globalTdStyle, width: '180px' },
+                                render: (item) => {
+                                    return (
+                                        <span className="fs-6">
+                                            {item.createTime}
+                                        </span>
+                                    );
+                                }
+                            },
+                            {
                                 field: 'hash', name: intl.get('TXS_HASH'),
-                                tdStyle: {...this.state.globalTdStyle, maxWidth: '128px' },
+                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '160px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
@@ -190,7 +137,7 @@ class Transactions extends React.Component {
                             },
                             {
                                 field: 'blockHeight', name: intl.get('TXS_BLOCK'),
-                                tdStyle: {...this.state.globalTdStyle, width: '6%' },
+                                tdStyle: { ...this.state.globalTdStyle, width: '100px' },
                                 render: (item) => {
                                     return (
                                         <a href={`/blocks/${item.blockHash}`}>
@@ -199,26 +146,14 @@ class Transactions extends React.Component {
                                     );
                                 }
                             },
-                            {
-                                field: 'timestamp', name: intl.get('TXS_TIME'),
-                                tdStyle: {...this.state.globalTdStyle, width: '230px' },
-                                render: (item) => {
-                                    let time = parseInt(item.timestamp);
-                                    const timestr = timeformat(new Date(time * 1000));
-                                    return (
-                                        <span className="fs-6">
-                                            {timestr}
-                                        </span>
-                                    );
-                                }
-                            },
+                            
                             {
                                 field: 'from', name: intl.get('TXS_FROM'),
-                                tdStyle: {...this.state.globalTdStyle, maxWidth: '120px' },
+                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '120px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href={`/address/${item.from}`}>
+                                            <a href={`/accounts/${item.from}`}>
                                                 {item.from}
                                             </a>
                                         </div>
@@ -228,45 +163,49 @@ class Transactions extends React.Component {
                             },
                             {
                                 field: 'to', name: intl.get('TXS_TO'),
-                                tdStyle: {...this.state.globalTdStyle, maxWidth: '120px' },
+                                tdStyle: { ...this.state.globalTdStyle, maxWidth: '120px' },
                                 render: (item) => {
                                     return (
                                         <div className="text-truncate">
-                                            <a href={`/address/${item.to}`}>
+                                            <a href={`/accounts/${item.to}`}>
                                                 {item.to}
                                             </a>
                                         </div>
                                     );
                                 }
                             },
-                            { field: 'value', name: intl.get('TXS_VALUE'), 
-                            thStyle: {textAlign:'right'},
-                            tdStyle: {...this.state.globalTdStyle, textAlign:'right'},
-                            render: (item)=>{
-                                let val = atto2base(item.value);
-                                return (
-                                    <span>
-                                                {val} 
-                                                <span style={{
+                            {
+                                field: 'value', name: intl.get('TXS_VALUE'),
+                                thStyle: { textAlign: 'right' },
+                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                render: (item) => {
+                                    let val = atto2base(item.value);
+                                    return (
+                                        <span>
+                                            {defaultrNumberFormatFF4(val)}
+                                            <span style={{
                                                 fontSize: '.8rem',
                                             }}> XFSC</span>
-                                            </span>
-                                );
-                            } },
-                            { field: 'gasFee', name: intl.get('TXS_GAS_FEE'),
-                            thStyle: {textAlign:'right'},
-                            tdStyle: {...this.state.globalTdStyle, textAlign:'right'},
-                            render: (item)=>{
-                                // let val = atto2base(item.value);
-                                return (
-                                    <span>
-                                                {item.gasFee} 
-                                                <span style={{
+                                        </span>
+                                    );
+                                }
+                            },
+                            {
+                                field: 'gasFee', name: intl.get('TXS_GAS_FEE'),
+                                thStyle: { textAlign: 'right' },
+                                tdStyle: { ...this.state.globalTdStyle, textAlign: 'right' },
+                                render: (item) => {
+                                    let val = atto2base(item.gasFee);
+                                    return (
+                                        <span>
+                                            {defaultrNumberFormatFF6(val)}
+                                            <span style={{
                                                 fontSize: '.8rem',
                                             }}> XFSC</span>
-                                            </span>
-                                );
-                            } },
+                                        </span>
+                                    );
+                                }
+                            },
                         ]} data={this.state.data} click={() => { }} >
                         </Table>
                     </div>
