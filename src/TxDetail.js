@@ -86,9 +86,7 @@ class TXDetail extends React.Component {
                                     {intl.get('TX_DETAIL_HASH')}:
                                 </div>
                                 <div className="col-md-10">
-                                    <div className="d-flex">
-                                        {this.state.data.hash}
-                                    </div>
+                                    {this.state.data.hash}
                                 </div>
                             </div>
                         </li>

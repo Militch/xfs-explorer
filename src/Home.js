@@ -139,9 +139,8 @@ class Home extends React.Component {
         let latest = await api.getLatest();
         const { blocks, txs } = latest;
         this.setState({status: status, latestBlocks: blocks, latestTxs: txs});
-
-        let txCountByDay = await api.getTxCountByDay();
-    
+        try{
+            let txCountByDay = await api.getTxCountByDay();
         console.log('status', txCountByDay);
         let parseTxCountByDay = () =>{
             let times = txCountByDay.map(({time})=>{
@@ -168,7 +167,9 @@ class Home extends React.Component {
             console.log(times);
         }
         parseTxCountByDay();
+     } catch(e){
 
+        }
     }
     render() {
         const difficultyCardText = (num)=>{
@@ -216,6 +217,8 @@ class Home extends React.Component {
                                             fontSize: '26px',
                                             fontWeight: 400,
                                         }}>
+                                            {/* <div class="skeleton-line"></div>
+                                            <div class="skeleton-line"></div> */}
                                             {defaultIntNumberFormat(this.state.status.latestHeight)}
                                             {/* {this.state.status.latestHeight} */}
                                         </p>

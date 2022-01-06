@@ -67,9 +67,7 @@ class TokenDetail extends React.Component {
                             {intl.get('TOKENS_DETAIL_NAME')}:
                             </div>
                             <div className="col-md-10">
-                                <div className="d-flex">
-                                    {this.state.data.token.name}
-                                </div>
+                                 {this.state.data.token.name}
                             </div>
                         </div>
                     </li>
